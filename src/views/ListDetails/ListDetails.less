@@ -1,0 +1,258 @@
+.list-details-box {
+    width: calc(100% - 20px);
+    display: inline-flex;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.list-pictrue {
+    width: 183px;
+    height: 183px;
+    min-width: 183px;
+    min-height: 183px;
+    display: inline-flex;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.list-details {
+    display: inline-flex;
+    margin-left: 15px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.list-name {
+    font-weight: 900;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+
+    .gedan {
+        display: inline-flex;
+        font-size: 13px;
+        border-radius: 5px;
+        border: 1px solid #ec4141;
+        padding: 0 3px 0 3px;
+        line-height: 18px;
+        margin-right: 8px;
+        margin-top: 3px;
+        color: #ec4141;
+    }
+}
+
+.edit-box {
+    display: flex;
+    align-items: center;
+
+    .edit {
+        padding: 5px 15px 5px 15px !important;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        padding: 0 10px 0 10px;
+        margin-right: 20px;
+    }
+
+    .edit:hover {
+        background-color: #00000021;
+    }
+
+    .eidt-max-height {
+        max-height: 34px;
+        min-width: 104px;
+    }
+
+    .play-all-edit {
+        background-color: #ec4141;
+        padding: 5px 15px 5px 15px !important;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        padding: 0 10px 0 10px;
+        margin-right: 20px;
+    }
+
+    .play-all-edit:hover {
+        background-color: #bc3434;
+    }
+
+    .icon {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin-top: 1px;
+    }
+
+    .white {
+        color: #ffffff;
+    }
+
+    .text {
+        border: none;
+        margin-left: 5px;
+    }
+
+    .triangle {
+        width: 0;
+        height: 0;
+        border-radius: 0;
+        border-left: 11px solid #ffffff;
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        margin-top: 2px;
+    }
+}
+
+.list-tag-box {
+    display: inline-flex;
+
+    div {
+        display: inline-flex;
+    }
+}
+
+.statistics {
+    .name {
+        margin-right: 5px;
+    }
+
+    div {
+        display: inline-flex;
+    }
+}
+
+.description {
+    .name {
+        margin-right: 5px;
+        min-width: 32px;
+    }
+
+    display: inline-flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.songs-list {
+    width: calc(100% - 20px);
+    margin-left: 20px;
+    margin-top: 20px;
+
+    .title {
+        width: 100%;
+
+        div {
+            width: 33%;
+            display: inline-flex;
+            justify-content: start;
+            align-items: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .singer{
+            width: 20%;
+        }
+        .song{
+            width: 20%;
+        }
+        .edit {
+            width: 20%;
+            display: inline-flex;
+            justify-content: center;
+            div{
+                width: 30px;
+            }
+        }
+        .album {
+            width: 33%;
+
+        }
+    }
+
+    .songs {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+
+        div {
+            margin: 1px 0 1px 0;
+            width: 33%;
+            display: inline-flex;
+            justify-content: start;
+            align-items: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .album {
+            display: inline-flex;
+            justify-content: start;
+            width: 150px;
+            height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .singer {
+            width: 100px;
+        }
+        .singers{
+            width: 20%;
+        }
+        .song {
+            width: 20%;
+        }
+        .edit {
+            width: 20%;
+            display: inline-flex;
+            justify-content: center;
+            div{
+                width: 40px;
+                height: 40px;
+            }
+            svg{
+                width: 18px;
+                height: 18px;
+            }
+            .play{
+                svg{
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+            path{
+                fill: #b2b2ae;
+            }
+            .play:hover {
+                path{
+                    fill:#333333;
+                }
+            }
+            .download:hover {
+                path{
+                    fill:#333333;
+                }
+            }
+            .collect:hover {
+                path{
+                    fill:#333333;
+                }
+            }
+        }
+        
+
+    }
+    .zebra {
+        background-color: #f5f2f2;
+    }
+
+    .songs:hover {
+        background-color: #d8d2d2;
+    }
+}

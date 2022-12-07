@@ -1,0 +1,54 @@
+<template>
+  <div class="footer-left-box">
+    <div class="picture">
+      <img :src="picUrl" alt="图片" />
+    </div>
+    <div class="content">
+      <div class="name">{{ name }}</div>
+      <div class="source">
+        <div class="singers" v-for="(singer, index) in singers.list" :key="singer.id">
+          {{ singer.name }}
+          <div v-if="index != singers.list.length - 1">/</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script lang="ts">
+import { useCounterStore } from '@/stores/counter';
+import { ref, watch, reactive } from 'vue';
+export default {
+  name: 'FooterLeft',
+  components: {},
+  setup() {
+    const store = useCounterStore();
+    const name = ref('当前无歌曲');
+    const picUrl = ref('');
+    const album = ref('');
+    const list: any[] = [{ name: '未知' }];
+    const singers = reactive({ list });
+    const isPlay = ref(false);
+    const play = (): void => {
+      isPlay.value = !isPlay.value;
+    };
+    watch(
+      () => store.currentId,
+      (newId) => {
+        getSongDetails(String(newId));
+      }
+    );
+    async function getSongDetails(ids: string) {
+      const res: any = await window.musicApi.getSongDetails(ids);
+      name.value = res.body.songs[0].name;
+      picUrl.value = res.body.songs[0].al.picUrl;
+      album.value = res.body.songs[0].al.name;
+      singers.list = res.body.songs[0].ar;
+      console.log(res.body.songs[0].al);
+    }
+    return { isPlay, play, name, picUrl, album, singers };
+  },
+};
+</script>
+<style lang="less" scoped>
+@import '@/layout/footer/footerleft.less';
+</style>
