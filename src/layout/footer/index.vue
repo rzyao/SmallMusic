@@ -14,6 +14,7 @@
         @CurrentTime="getCurrentTime"
         @onProgress="getProgress"
         @onEnd="next"
+        @onLoadError="LoadUrlError"
       ></MusicPlay>
       <div class="control">
         <div class="button-left" @click="last">
@@ -57,7 +58,7 @@
               width: 9px;
               height: 9px;
               border-radius: 50%;
-              background-color: #faf9f9;
+              background-color: #d63131;
               top: -3px;
             "
           ></div>
@@ -114,7 +115,7 @@ export default {
     const totalTime = ref(0);
     const m_totalTime = ref('0:00');
     const startTime = ref(0);
-    const currentTime = ref(0);
+    const currentTime = ref('0:00');
     const isPlay = ref(false);
     const styleWidth = ref('');
     const play = (): void => {
@@ -138,6 +139,10 @@ export default {
     function last() {
       console.log('last');
       playLastSong();
+    }
+    function LoadUrlError() {
+      console.log('url请求失败,播放下一首');
+      playNextSong();
     }
     function conversion(time: any) {
       const minutes = Math.floor(time / 60);
@@ -213,6 +218,7 @@ export default {
       mouseDown,
       next,
       last,
+      LoadUrlError,
     };
   },
 };

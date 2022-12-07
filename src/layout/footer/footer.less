@@ -5,22 +5,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .left-box {
         min-width: 240px;
-        height: 80px;
+        height: @footer-height;
         flex: 1;
     }
 
     .control-box {
         min-width: 400px;
-        height: 80px;
+        height: @footer-height;
         display: inline-block;
 
         .control {
             width: 300px;
             height: 50px;
             margin-left: 50px;
-            display:flex;
+            display: flex;
             justify-content: center;
             align-items: center;
 
@@ -31,7 +32,7 @@
 
                 .vertical-left {
                     width: 2px;
-                    height: 18px;
+                    height: 12px;
                     background-color: #000000;
                     margin-top: 5px;
                 }
@@ -40,22 +41,24 @@
                     display: inline-flex;
                     width: 0;
                     height: 0;
-                    border-top: 8px solid transparent;
-                    border-bottom: 8px solid transparent;
-                    border-right: 18px solid #000000;
-                    margin-right: 60px;
+                    border-top: 6px solid transparent;
+                    border-bottom: 6px solid transparent;
+                    border-right: 12px solid #000000;
+                    margin-right: 40px;
                     margin-top: 5px;
                 }
             }
-            .button-left:hover{
-                .back{
-                    border-right: 18px solid #ffffff;
+
+            .button-left:hover {
+                .back {
+                    border-right: 12px solid #848484;
                 }
+
                 .vertical-left {
-                    background-color: #ffffff;
+                    background-color: #848484;
                 }
             }
-            
+
 
             .circal-box {
                 width: 50px;
@@ -72,16 +75,16 @@
                 display: inline-flex;
                 justify-content: center;
                 align-items: center;
-                background-color: #db2c2c;
+                background-color: #f1f1f1;
                 border-radius: 50%;
 
                 .pause {
                     display: inline-flex;
                     width: 0;
                     height: 0;
-                    border-top: 12px solid transparent;
-                    border-bottom: 12px solid transparent;
-                    border-left: 18px solid #000000;
+                    border-top: 8px solid transparent;
+                    border-bottom: 8px solid transparent;
+                    border-left: 14px solid #000000;
                     margin-left: 5px;
                 }
 
@@ -92,71 +95,79 @@
                     justify-content: center;
                     align-items: center;
                     margin-bottom: 5px;
-                    
+
                     .vertical-left {
                         width: 4px;
-                        height: 20px;
+                        height: 16px;
                         margin-right: 2px;
                         margin-top: 5px;
-                        background-color:#000000;
+                        background-color: #000000;
                     }
 
                     .vertical-right {
                         width: 4px;
-                        height: 20px;
+                        height: 16px;
                         margin-left: 2px;
                         margin-top: 5px;
-                        background-color:#000000;
+                        background-color: #000000;
                     }
                 }
             }
 
             .circal:hover {
                 border-radius: 50%;
-                background-color: #be1b1b;
+                background-color: #e5e5e5;
             }
-            .button-right{
+
+            .button-right {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
                 .next {
                     display: inline-flex;
                     width: 0;
                     height: 0;
-                    border-top: 8px solid transparent;
-                    border-bottom: 8px solid transparent;
-                    border-left: 18px solid #000000;
-                    margin-left: 60px;
+                    border-top: 6px solid transparent;
+                    border-bottom: 6px solid transparent;
+                    border-left: 12px solid #000000;
+                    margin-left: 40px;
                     margin-top: 5px;
                 }
+
                 .vertical-right {
                     width: 2px;
-                    height: 18px;
+                    height: 12px;
                     background-color: #000000;
                     margin-top: 5px;
                 }
             }
-            .button-right:hover{
+
+            .button-right:hover {
                 .next {
-                    border-left: 18px solid #ffffff;
+                    border-left: 12px solid #848484;
                 }
+
                 .vertical-right {
-                    background-color: #ffffff;
+                    background-color: #848484;
                 }
             }
         }
 
         .progress {
-            display:flex;
+            display: flex;
             width: 400px;
             height: 20px;
             justify-content: center;
             align-items: center;
+
             .current {
                 display: inline-flex;
                 user-select: none;
                 margin-right: 8px;
+                color: #5d5d5d;
             }
+
             .line {
                 display: inline-flex;
                 width: 360px;
@@ -166,7 +177,9 @@
                 opacity: 0.8;
                 background-color: #b1abab;
                 position: relative;
+                color: #5d5d5d;
             }
+
             .total {
                 display: inline-flex;
                 margin-left: 8px;
@@ -174,9 +187,10 @@
             }
         }
     }
+
     .right-box {
         min-width: 300px;
-        height: 80px;
+        height: @footer-height;
         flex: 1;
     }
 }

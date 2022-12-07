@@ -1,15 +1,13 @@
 <template>
   <div class="footer-left-box">
     <div class="picture">
-      <img :src="picUrl" alt="图片" />
+      <img :src="picUrl ? picUrl : '@/assets/default_song_pic.png'" alt="图片" />
     </div>
     <div class="content">
       <div class="name">{{ name }}</div>
-      <div class="source">
-        <div class="singers" v-for="(singer, index) in singers.list" :key="singer.id">
-          {{ singer.name }}
-          <div v-if="index != singers.list.length - 1">/</div>
-        </div>
+      <div class="singers" v-for="(singer, index) in singers.list" :key="singer.id">
+        {{ singer.name }}
+        <div v-if="index != singers.list.length - 1">/</div>
       </div>
     </div>
   </div>
@@ -17,13 +15,14 @@
 <script lang="ts">
 import { useCounterStore } from '@/stores/counter';
 import { ref, watch, reactive } from 'vue';
+import imgUrl from '@/assets/default_song_pic.png';
 export default {
   name: 'FooterLeft',
   components: {},
   setup() {
     const store = useCounterStore();
     const name = ref('当前无歌曲');
-    const picUrl = ref('');
+    const picUrl = ref(imgUrl);
     const album = ref('');
     const list: any[] = [{ name: '未知' }];
     const singers = reactive({ list });

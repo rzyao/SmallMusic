@@ -15,7 +15,7 @@ import { watch, onMounted, ref } from 'vue';
 import { conversion, getProgress } from './musicPlay';
 export default {
   name: 'MusicPlay',
-  emits: ['TotalTime', 'CurrentTime', 'onProgress', 'State', 'onEnd'],
+  emits: ['TotalTime', 'CurrentTime', 'onProgress', 'State', 'onEnd', 'onLoadError'],
   props: {
     url: String,
     play: Boolean,
@@ -49,7 +49,13 @@ export default {
       getTotalTime();
       onPlaying();
       onEnd();
+      watchStalled();
     });
+    function watchStalled() {
+      document.getElementsByTagName('audio')[0].addEventListener('stalled', () => {
+        emit('onLoadError', 'Failed to fetch data');
+      });
+    }
     function onEnd() {
       document.getElementsByTagName('audio')[0].addEventListener('ended', () => {
         emit('State', 'ended');

@@ -107,9 +107,9 @@
   </div>
   <div class="songs-list">
     <div class="title">
-      <div class="album">专辑</div>
-      <div class="singer">歌手</div>
       <div class="song">歌曲</div>
+      <div class="singer">歌手</div>
+      <div class="album">专辑</div>
       <div class="edit">操作</div>
     </div>
     <div
@@ -118,15 +118,15 @@
       :key="song.id"
       :class="index % 2 == 0 ? 'zebra' : ' '"
     >
-      <div class="album-box">
-        <div class="album">{{ song.al.name }}</div>
-      </div>
+      <div class="song">{{ song.name }}</div>
       <div class="singers">
         <div class="singer" v-for="singer in song.ar" :key="singer.id">
           {{ singer.name }}
         </div>
       </div>
-      <div class="song">{{ song.name }}</div>
+      <div class="album-box">
+        <div class="album">{{ song.al.name }}</div>
+      </div>
       <div class="edit">
         <div class="download">
           <svg

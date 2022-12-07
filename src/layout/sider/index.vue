@@ -28,9 +28,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.sider-box {
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-}
 .avatar-box {
   height: 160px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);

@@ -58,6 +58,7 @@ export default {
   top: @middle-top;
   bottom: @middle-bottom;
   width: @sider-width;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #footer {
@@ -66,5 +67,6 @@ export default {
   bottom: 0;
   width: 100%;
   height: @footer-height;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 </style>
