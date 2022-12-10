@@ -1,7 +1,7 @@
 <template>
   <div class="voice-box">
     <div class="voice-hover-change">
-      <div class="voice voice-close" v-if="!isShowVoice" @click="openAndCloseVoice">
+      <div class="voice voice-close cursor-pointer" v-if="!isShowVoice" @click="openAndCloseVoice">
         <svg
           t="1669663749449"
           class="icon"
@@ -19,7 +19,7 @@
           ></path>
         </svg>
       </div>
-      <div class="voice voice-open" v-if="isShowVoice" @click="openAndCloseVoice">
+      <div class="voice voice-open cursor-pointer" v-if="isShowVoice" @click="openAndCloseVoice">
         <svg
           t="1669664719508"
           class="icon"
@@ -84,9 +84,10 @@ export default {
         isShowVoice.value = !newV;
       }
     );
-    onMounted(() => {
+    onMounted(async () => {
       // 获取根据音量转化的height/bottom 值
-      const num = getVolume();
+      const num: number = await getVolume();
+      console.log('计算出的px值:' + num + 'px');
       $el('voice_progress').style.setProperty('height', num + 'px');
       $el('circle').style.setProperty('bottom', num + 'px');
     });
@@ -141,6 +142,7 @@ export default {
   height: 140px;
 
   .rectangular {
+    position: relative;
     width: 25px;
     height: 100px;
     background-color: #ffffff;
@@ -148,6 +150,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 
     .vertical-line {
       width: 2px;
@@ -177,19 +180,35 @@ export default {
       }
     }
   }
-  .triangle {
+  .rectangular::after {
+    content: ''; // 伪元素需要添加content才会显示
+    position: absolute;
     margin-left: 8px;
-    width: 0;
-    height: 0;
-    border-top: 6px solid #ffffff;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
+    bottom: 1px;
+    left: -4px;
+    width: 16px;
+    height: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  .rectangular::before {
+    content: ''; // 伪元素需要添加content才会显示
+    position: absolute;
+    margin-left: 8px;
+    bottom: -4px;
+    left: -1px;
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    transform: rotate(45deg);
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
   }
 }
 .on_mouse_down {
   height: 140px;
 
   .rectangular {
+    position: relative;
     width: 25px;
     height: 100px;
     background-color: #ffffff;
@@ -197,6 +216,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 
     .vertical-line {
       width: 2px;
@@ -226,13 +246,28 @@ export default {
       }
     }
   }
-  .triangle {
+  .rectangular::after {
+    content: ''; // 伪元素需要添加content才会显示
+    position: absolute;
     margin-left: 8px;
-    width: 0;
-    height: 0;
-    border-top: 6px solid #ffffff;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
+    bottom: 1px;
+    left: -4px;
+    width: 16px;
+    height: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  .rectangular::before {
+    content: ''; // 伪元素需要添加content才会显示
+    position: absolute;
+    margin-left: 8px;
+    bottom: -4px;
+    left: -1px;
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    transform: rotate(45deg);
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
   }
 }
 .voice {

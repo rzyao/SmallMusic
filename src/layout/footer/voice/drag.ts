@@ -35,8 +35,6 @@ export function dragEl() {
     $el('circle').style.setProperty('bottom', circle_y + 'px');
     $el('voice_progress').style.setProperty('height', circle_y + 'px');
     // 静音
-    console.log('circle_y');
-    console.log(circle_y);
     if (circle_y == 0) {
       changeMute(true);
     }
@@ -44,8 +42,12 @@ export function dragEl() {
       changeMute(false);
     }
     num = circle_y;
+    // num转化为小数
     num = num / 80;
     num = Number(num.toFixed(4));
+    console.log(num);
+    // 计算声音曲线
+    num = count(num);
     changeVolume(num);
   };
   document.onmouseup = () => {
@@ -60,6 +62,11 @@ export function dragEl() {
 }
 async function save(num: number) {
   const value = String(num);
+  console.log('最终音量:  ' + value);
   const res = await db.options.put({ id: 'volume', value: value });
   console.log('音量保存结果:' + res);
+}
+function count(x: number) {
+  const y = x ** 2;
+  return y;
 }

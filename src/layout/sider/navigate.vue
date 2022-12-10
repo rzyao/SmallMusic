@@ -3,7 +3,7 @@
     <div
       class="sider-menu"
       @click.stop="change(item)"
-      :class="index == item.name ? 'overstriking' : ''"
+      :class="path.indexOf(item.name) > -1 ? 'overstriking' : ''"
     >
       <router-link :to="item.path">
         <div class="sider-menu-name">{{ item.meta.title }}</div>
@@ -15,30 +15,32 @@
   </div>
 </template>
 <script lang="ts" scoped>
+import { ref, watch } from 'vue';
+import { useSongStore } from '@/stores/song';
 export default {
   name: 'navigate',
-  data() {
-    return {
-      selected: '',
-      index: 'Home',
-    };
-  },
   props: ['menuData'],
-  setup(props) {
-    console.log(props);
-    return {};
-  },
-  methods: {
-    change(item: any) {
-      this.index = item.name;
+  setup() {
+    const selected = ref('');
+    const index = ref('Home');
+    const path = ref('Home');
+    const Store = useSongStore();
+    function change(item: any) {
       if (item.children) {
-        if (this.selected == item.name) {
-          this.selected = '';
+        if (selected.value == item.name) {
+          selected.value = '';
         } else {
-          this.selected = item.name;
+          selected.value = item.name;
         }
       }
-    },
+    }
+    watch(
+      () => Store.currentRoute,
+      (val) => {
+        path.value = val;
+      }
+    );
+    return { selected, index, path, change };
   },
 };
 </script>

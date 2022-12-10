@@ -17,19 +17,19 @@
         @onLoadError="LoadUrlError"
       ></MusicPlay>
       <div class="control">
-        <div class="button-left" @click="last">
+        <div class="button-left cursor-pointer" @click="last">
           <div class="vertical-left"></div>
           <div class="back"></div>
         </div>
         <div class="circal-box">
-          <div class="circal button-play" @click="play">
+          <div class="circal button-play cursor-pointer" @click="play">
             <div :class="isPlay ? 'play' : 'pause'">
               <div class="vertical-left"></div>
               <div class="vertical-right"></div>
             </div>
           </div>
         </div>
-        <div class="button-right" @click="next">
+        <div class="button-right cursor-pointer" @click="next">
           <div class="next"></div>
           <div class="vertical-right"></div>
         </div>
@@ -47,11 +47,11 @@
               height: 3px;
               border-radius: 2px;
               opacity: 0.8;
-              background-color: #5eb127;
+              background-color: #ff3434;
             "
           ></div>
           <div
-            class="point"
+            class="point cursor-pointer"
             @mousedown="mouseDown"
             style="
               position: absolute;
@@ -70,13 +70,12 @@
       <FooterRight></FooterRight>
     </div>
   </div>
-  <a-progress :percent="30" />
 </template>
 <script lang="ts">
 import FooterLeft from '@/layout/footer/footerleft.vue';
 import FooterRight from '@/layout/footer/footerright.vue';
 import MusicPlay from '@/components/musicPlay/index.vue';
-import { useCounterStore } from '@/stores/counter';
+import { useSongStore } from '@/stores/song';
 import { useVolumeStore } from '@/stores/volume';
 import { ref, watch, nextTick, onMounted } from 'vue';
 import { db } from '@/untils/dexie/db';
@@ -93,7 +92,7 @@ export default {
     getVolume();
     const mute = ref(false);
     onMounted(() => {
-      // 监听声音变化
+      // 监听静音变化
       watch(
         () => VStore.mute,
         (newV) => {
@@ -104,11 +103,12 @@ export default {
       watch(
         () => VStore.volume,
         (newV) => {
+          console.log('监听声音变化', newV);
           volume.value = newV;
         }
       );
     });
-    const store = useCounterStore();
+    const store = useSongStore();
     const VStore = useVolumeStore();
     const { playLastSong, playNextSong } = store;
     const src = ref('');
@@ -173,7 +173,7 @@ export default {
       const line = document.getElementsByClassName('line')[0] as HTMLElement;
       const line_x = line.getBoundingClientRect().x;
       console.log(line_x);
-
+      const progress = document.getElementsByClassName('progress-line')[0] as HTMLElement;
       let point = document.getElementsByClassName('point')[0] as HTMLElement;
       point.style.cursor = 'move';
 
@@ -189,6 +189,7 @@ export default {
             distance = 0;
           }
           point.style.setProperty('left', distance + 'px');
+          progress.style.setProperty('width', distance + 'px');
         }
       };
       document.onmouseup = () => {

@@ -1,7 +1,8 @@
 import toLogin from '@/views/login/login';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Layout from '@/layout/index.vue';
-
+import { useSongStore } from '@/stores/song';
+const store = useSongStore();
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
@@ -24,7 +25,7 @@ const router = createRouter({
           path: '/Collection',
           name: 'Collection',
           meta: { title: '我的收藏' },
-          component: () => import('@/views/Chat/index.vue'),
+          component: () => import('@/views/Collection/index.vue'),
         },
         {
           path: '/Chat',
@@ -66,6 +67,7 @@ router.beforeEach((to, form, next) => {
     toLogin();
     return;
   }
+  store.changeCurrentRoute(to.path);
   next();
 });
 export default router;

@@ -1,4 +1,5 @@
 export interface musicApi {
+  //获取推荐歌单,limit:获取数量
   getLists: (limit: number) => Promise<void>;
   searchSong: (string) => Promise<void>;
   getListDetails: (id: number) => Promise<void>;
@@ -14,5 +15,11 @@ declare global {
   interface Window {
     musicApi: musicApi;
     electronApi: IElectronApi;
+    devApi: musicApi;
+  }
+}
+declare global {
+  interface String {
+    byteLength(this: string): number;
   }
 }

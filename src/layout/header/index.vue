@@ -108,7 +108,7 @@
           ></path>
         </svg>
       </div>
-      <div class="minimize">
+      <div class="minimize cursor-pointer" @click="minmize">
         <svg
           t="1669606706395"
           class="icon"
@@ -126,7 +126,7 @@
           ></path>
         </svg>
       </div>
-      <div class="maximize">
+      <div class="maximize cursor-pointer" @click="maxmize">
         <svg
           t="1669606907734"
           class="icon"
@@ -144,7 +144,7 @@
           ></path>
         </svg>
       </div>
-      <div class="close" @click="close">
+      <div class="close cursor-pointer" @click="close">
         <svg
           t="1669606428681"
           class="icon"
@@ -179,7 +179,13 @@ export default {
       console.log('click close');
       window.electronApi.send('close');
     }
-    return { serchText, onSearch, close };
+    function minmize() {
+      window.electronApi.send('window-min');
+    }
+    function maxmize() {
+      window.electronApi.send('window-max');
+    }
+    return { serchText, onSearch, close, minmize, maxmize };
   },
 };
 </script>

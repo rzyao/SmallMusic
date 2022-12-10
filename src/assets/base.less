@@ -28,8 +28,31 @@ body {
 
 #sider {
     background-color: @sider-background-color;
+    user-select:none;
 }
 
 #footer {
     background-color: @footer-background-color;
+    user-select:none;
+}
+// 设置鼠标为小手
+.cursor-pointer{
+    cursor:pointer ;
+}
+// 禁止选中
+.no-select {
+    user-select:none;
+}
+// 允许选中
+.select {
+    user-select:text !important;
+}
+// 定义滚动条样式
+.scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+    background-color: #dfdfdf;
+    border-radius: 5px;
 }

@@ -21,6 +21,19 @@ const createWindow = () => {
   mainWindow.loadFile('./dist/index.html');
   // 打开开发工具
   // mainWindow.webContents.openDevTools()
+
+  //接收最小化命令
+  ipcMain.on('window-min', function () {
+    mainWindow.minimize();
+  });
+  //接收最大化命令
+  ipcMain.on('window-max', function () {
+    if (mainWindow.isMaximized()) {
+      mainWindow.restore();
+    } else {
+      mainWindow.maximize();
+    }
+  });
 };
 // 这段程序将会在 Electron 结束初始化
 // 和创建浏览器窗口的时候调用

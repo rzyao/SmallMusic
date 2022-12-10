@@ -1,19 +1,19 @@
 <template>
-  <div class="list-details-box">
+  <div class="list-details-box no-select">
     <div class="list-pictrue">
-      <img :src="playlist.value.coverImgUrl" alt="歌单图像" style="width: 183px; height: 183px" />
+      <img :src="listDetails.coverImgUrl" alt="歌单图像" style="width: 183px; height: 183px" />
     </div>
     <div class="list-details">
       <div class="list-name">
-        <div class="gedan">歌单</div>
-        {{ playlist.value.name }}
+        <div class="gedan select">歌单</div>
+        {{ listDetails.name }}
       </div>
       <div class="edit-box">
-        <div class="play-all-edit eidt-max-height" @click="playAll">
+        <div class="play-all-edit eidt-max-height cursor-pointer" @click="playAll">
           <div class="triangle"></div>
           <div class="text white">播放全部</div>
         </div>
-        <div class="add-to-playlist edit eidt-max-height">
+        <div class="add-to-playlist edit eidt-max-height cursor-pointer">
           <div class="icon">
             <svg
               t="1669995111154"
@@ -34,7 +34,7 @@
           </div>
           <div class="text">添加播放</div>
         </div>
-        <div class="collect edit eidt-max-height">
+        <div class="collect edit eidt-max-height cursor-pointer">
           <div class="icon">
             <svg
               t="1669995204807"
@@ -54,7 +54,7 @@
           </div>
           <div class="text">收藏</div>
         </div>
-        <div class="share edit eidt-max-height">
+        <div class="share edit eidt-max-height cursor-pointer">
           <div class="icon">
             <svg
               t="1669995248654"
@@ -81,31 +81,69 @@
       </div>
       <div class="list-tags-box">
         标签:
-        <div class="list-tag-box" v-for="(item, index) in playlist.value.tags" :key="index">
+        <div class="list-tag-box select" v-for="(item, index) in listDetails.tags" :key="index">
           <div class="tag">{{ item }}</div>
-          <div v-if="playlist.value.tags.length > index + 1">/</div>
+          <div v-if="listDetails.tags.length > index + 1">/</div>
         </div>
       </div>
       <div class="statistics">
-        <div class="songs-count">{{ playlist.value.trackIds }}</div>
-        <div class="play-count">
+        <div class="songs-count">
+          <div class="name">歌曲:</div>
+          {{ listDetails.trackIds.length }}
+        </div>
+        <div class="play-count" style="margin-left: 10px">
           <div class="name">播放数:</div>
-          {{
-            playlist.value.playCount > 10000
-              ? RML4(playlist.value.playCount)
-              : playlist.value.playCount
-          }}
-          <div v-if="playlist.value.playCount > 10000">万</div>
+          {{ listDetails.playCount > 10000 ? RML4(listDetails.playCount) : listDetails.playCount }}
+          <div v-if="listDetails.playCount > 10000">万</div>
         </div>
         <div></div>
       </div>
-      <div class="description">
+      <div class="description" ref="down">
         <div class="name">简介:</div>
-        {{ playlist.value.description }}
+        <div class="text select" ref="text">{{ listDetails.description }}</div>
+        <!-- 内容超出显示下拉按钮 -->
+        <div
+          class="down cursor-pointer"
+          v-if="listDetails.description.byteLength() * 14 > 450"
+          @click="changeHeight"
+        >
+          <svg
+            t="1670602171086"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="2140"
+            width="20"
+            height="20"
+            v-if="!isDown"
+          >
+            <path
+              d="M79.123059 327.850933l405.024593 413.260162c15.690354 16.009625 41.469484 16.009625 57.160861 0l405.02357-413.260162c24.819269-25.323758 6.877641-68.028373-28.579919-68.028373L107.704001 259.82256C72.245418 259.82256 54.30379 302.527175 79.123059 327.850933z"
+              p-id="2141"
+            ></path>
+          </svg>
+          <svg
+            t="1670605884123"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="3001"
+            width="20"
+            height="20"
+            v-if="isDown"
+          >
+            <path
+              d="M946.33106 697.353498 541.30749 284.093337c-15.690354-16.009625-41.469484-16.009625-57.160861 0l-405.024593 413.260162c-24.819269 25.323758-6.877641 68.028373 28.579919 68.028373l810.048163 0C953.209724 765.381871 971.150328 722.677257 946.33106 697.353498z"
+              p-id="3002"
+            ></path>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
-  <div class="songs-list">
+  <div class="songs-list no-select">
     <div class="title">
       <div class="song">歌曲</div>
       <div class="singer">歌手</div>
@@ -114,21 +152,21 @@
     </div>
     <div
       class="songs"
-      v-for="(song, index) in songs.list"
+      v-for="(song, index) in songs"
       :key="song.id"
       :class="index % 2 == 0 ? 'zebra' : ' '"
     >
       <div class="song">{{ song.name }}</div>
       <div class="singers">
-        <div class="singer" v-for="singer in song.ar" :key="singer.id">
+        <div class="singer" v-for="singer in song.singers" :key="singer.id">
           {{ singer.name }}
         </div>
       </div>
       <div class="album-box">
-        <div class="album">{{ song.al.name }}</div>
+        <div class="album">{{ song.album }}</div>
       </div>
       <div class="edit">
-        <div class="download">
+        <div class="download cursor-pointer">
           <svg
             t="1670158397251"
             class="icon"
@@ -156,7 +194,7 @@
             ></path>
           </svg>
         </div>
-        <div class="collect">
+        <div class="collect cursor-pointer">
           <svg
             t="1670158679036"
             class="icon"
@@ -174,7 +212,7 @@
             ></path>
           </svg>
         </div>
-        <div class="play" @click="playSong(song.id)">
+        <div class="play cursor-pointer" @click="playSong(song.id)">
           <svg
             t="1670158626603"
             class="icon"
@@ -207,18 +245,19 @@
   </div>
 </template>
 <script lang="ts">
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { arr } from '@/views/ListDetails/111';
-import { useCounterStore } from '@/stores/counter';
+import { useSongStore } from '@/stores/song';
+import type { Song } from './type';
 export default {
   name: 'ListDetails',
   components: {},
   setup() {
-    const store = useCounterStore();
-    const { changeSong, changeCurrenList } = store;
-    const list: any[] = [];
-    const songs = reactive({ list });
+    const down = ref<HTMLInputElement | null>(null);
+    const text = ref<HTMLInputElement | null>(null);
+    const store = useSongStore();
+    const { changeSong, insteadCurrentPlayList } = store;
+    const songs: Song[] = reactive([]);
     function RML4(num: number) {
       const length = String(num).length;
       const res = String(num).substring(0, length - 4);
@@ -226,57 +265,47 @@ export default {
     }
     const router = useRoute();
     const listId = Number(router.query.id);
-    const value: any = {};
-    const playlist = reactive({
-      value,
+    const listDetails = reactive({
+      id: 0,
+      name: '',
+      coverImgUrl: '',
+      description: '',
+      tags: [''],
+      playCount: 0,
+      shareCount: 0,
+      trackIds: [],
     });
     onMounted(async () => {
-      // const res: any = await window.musicApi.getListDetails(listId);
-      // console.log(res);
-      // playlist.value = res.body.playlist;
-      playlist.value = {
-        id: 2846054862,
-        name: '用音乐保持你每天的嘴角上扬',
-        coverImgId: 109951164152314270,
-        coverImgUrl: 'https://p1.music.126.net/hLv4YJOiLTE16LlRpdxZgQ==/109951164152314267.jpg',
-        coverImgId_str: '109951164152314267',
-        adType: 0,
-        userId: 389547363,
-        createTime: 1560683477373,
-        status: 0,
-        opRecommend: false,
-        highQuality: false,
-        newImported: false,
-        updateTime: 1669191426061,
-        trackCount: 116,
-        specialType: 0,
-        privacy: 0,
-        trackUpdateTime: 1669191446302,
-        commentThreadId: 'A_PL_0_2846054862',
-        playCount: 41429588,
-        trackNumberUpdateTime: 1669191426061,
-        subscribedCount: 371223,
-        cloudTrackCount: 0,
-        ordered: true,
-        description:
-          '我已经准备好了好听又欢快的歌曲\n那你准备好今天的嘴角上扬了吗\n\n快来吧 让好听歌曲伴随你一整天的微笑\n（持更...）',
-        tags: ['华语', '流行', '散步'],
-        updateFrequency: null,
-        backgroundCoverId: 0,
-        backgroundCoverUrl: null,
-        titleImage: 0,
-        titleImageUrl: null,
-        englishTitle: null,
-        officialPlaylistType: null,
-        copied: false,
-      };
-      // const res: any = await window.musicApi.getAllSongs(listId);
-      // console.log(res.body.songs);
-      // songs.list = res.body.songs;
-      songs.list = arr;
+      const res: any = await window.devApi.getListDetails(listId);
+      const result = res.body.playlist;
+      console.log('获取歌单详情');
+      console.log(result);
+      listDetails.id = result.id;
+      listDetails.name = result.name;
+      listDetails.coverImgUrl = result.coverImgUrl;
+      listDetails.description = result.description;
+      listDetails.tags = result.tags;
+      listDetails.playCount = result.playCount;
+      listDetails.shareCount = result.shareCount;
+      listDetails.trackIds = result.trackIds;
+      // 请求歌单所有歌曲
+      const res2: any = await window.devApi.getAllSongs(listId);
+      console.log('获取歌单所有歌曲');
+      console.log(res2);
+      const result2 = res2.body.songs;
+      // 删选属性
+      result2.forEach((item: any) => {
+        const song: Song = {
+          id: item.id,
+          name: item.name,
+          singers: item.ar,
+          album: item.al.name,
+        };
+        songs.push(song);
+      });
     });
-    async function playSong(id: number) {
-      const res: any = await window.musicApi.getSongUrl(id);
+    async function playSong(id: string) {
+      const res: any = await window.devApi.getSongUrl(Number(id));
       console.log(res);
       console.log(res.body.data[0].url);
       const url = res.body.data[0].url;
@@ -284,14 +313,41 @@ export default {
     }
     function playAll() {
       console.log('playAll');
-      changeCurrenList(songs.list);
+      insteadCurrentPlayList(songs);
+    }
+    const isDown = ref(false);
+    function changeHeight() {
+      console.log(down.value);
+      if (!isDown.value && down.value) {
+        if (text.value) text.value.style.whiteSpace = 'inherit';
+        isDown.value = true;
+        down.value.style.height = 'auto';
+        const height = down.value.offsetHeight;
+        console.log(height);
+        if (down.value) down.value.style.height = '22px';
+        setTimeout(() => {
+          // if  跳过ts提示可能为null
+          if (down.value) down.value.style.height = `${height}px`;
+        }, 0);
+      } else if (down.value) {
+        isDown.value = false;
+        down.value.style.height = '22px';
+        setTimeout(() => {
+          if (text.value) text.value.style.whiteSpace = 'nowrap';
+        }, 800);
+      }
+      console.log(isDown.value);
     }
     return {
-      playlist,
+      listDetails,
       RML4,
       songs,
       playSong,
       playAll,
+      changeHeight,
+      down,
+      isDown,
+      text,
     };
   },
 };

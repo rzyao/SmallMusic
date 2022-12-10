@@ -1,7 +1,7 @@
 <template>
   <div class="footer-right-box">
     <div class="left">
-      <div class="button word word-open" v-if="wordOpen" @click="openAndCloseWord">
+      <div class="button word word-open cursor-pointer" v-if="wordOpen" @click="openAndCloseWord">
         <svg
           t="1669663927302"
           class="icon"
@@ -19,7 +19,7 @@
           ></path>
         </svg>
       </div>
-      <div class="button word word-close" v-if="!wordOpen" @click="openAndCloseWord">
+      <div class="button word word-close cursor-pointer" v-if="!wordOpen" @click="openAndCloseWord">
         <svg
           t="1669663927302"
           class="icon"
@@ -33,11 +33,11 @@
           <path
             d="M512 0c282.766222 0 512 229.233778 512 512s-229.233778 512-512 512S0 794.766222 0 512 229.233778 0 512 0z m0 64C264.590222 64 64 264.590222 64 512S264.590222 960 512 960 960 759.409778 960 512 759.409778 64 512 64z m262.826667 183.694222V727.04c0 29.411556-6.883556 43.804444-25.656889 51.313778-20.024889 8.135111-53.191111 8.760889-103.879111 8.760889-2.503111-12.515556-9.386667-34.417778-15.644445-46.307556 38.172444 1.877333 75.093333 1.251556 86.357334 0.625778 10.638222 0 14.392889-3.754667 14.392888-14.392889V290.872889h-300.373333V247.694222H774.826667z m-408.007111 163.953778v263.452444l64.455111-45.056c3.128889 12.515556 10.012444 30.037333 13.767111 38.798223-98.929778 73.898667-118.414222 88.206222-128.142222 100.209777l-1.393778 1.792c-5.006222-9.386667-18.147556-25.031111-26.282667-31.914666 11.889778-9.386667 33.792-32.540444 33.792-63.829334v-219.022222H230.4v-44.430222h136.419556z m288.483555 43.804444v198.997334H512v41.927111h-41.927111v-240.924445h185.230222z m-41.927111 40.049778H512v118.272h101.376V495.502222z m71.964444-142.677333v40.049778h-239.672888v-40.049778h239.672888zM297.984 235.804444c33.166222 28.16 75.719111 66.958222 95.744 92.615112l-31.288889 32.540444c-18.773333-26.282667-60.700444-67.584-94.492444-96.369778z"
             p-id="3043"
-            fill="#626451"
+            fill="#abaaaa"
           ></path>
         </svg>
       </div>
-      <div class="button like add-like" v-if="!isLike" @click="changeLike">
+      <div class="button like add-like cursor-pointer" v-if="!isLike" @click="changeLike">
         <svg
           t="1670424756118"
           class="icon"
@@ -55,7 +55,7 @@
           ></path>
         </svg>
       </div>
-      <div class="button like liked" v-if="isLike" @click="changeLike">
+      <div class="button like liked cursor-pointer" v-if="isLike" @click="changeLike">
         <svg
           t="1670424651276"
           class="icon"
@@ -73,46 +73,13 @@
           ></path>
         </svg>
       </div>
-      <div class="button save-to-list no-save" v-if="!isSave">
-        <svg
-          t="1670424626549"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="6274"
-          width="32"
-          height="32"
-        >
-          <path
-            d="M949.888 457.258667c26.069333-29.824 13.866667-67.52-24.789333-76.309334L681.728 325.546667l-127.786667-214.677334c-20.266667-34.069333-59.925333-34.090667-80.213333 0l-127.786667 214.677334-243.370666 55.381333c-38.442667 8.746667-50.858667 46.506667-24.789334 76.309333l164.394667 188.053334-22.613333 248.917333c-3.584 39.466667 28.458667 62.805333 64.896 47.146667l237.781333-102.037334a21.333333 21.333333 0 0 0-16.810667-39.210666L267.626667 902.186667c-6.698667 2.88-6.229333 3.221333-5.568-4.096l24.277333-267.093334-176.426667-201.813333c-4.757333-5.461333-4.906667-5.034667 2.133334-6.634667l261.205333-59.434666 137.152-230.4c3.733333-6.293333 3.136-6.293333 6.869333 0l137.173334 230.4 261.205333 59.434666c7.125333 1.621333 6.954667 1.088 2.133333 6.613334l-176.426666 201.813333 24.256 267.093333a21.333333 21.333333 0 1 0 42.496-3.84l-22.613334-248.917333 164.394667-188.053333z"
-            fill="#333333"
-            p-id="6275"
-          ></path>
-        </svg>
-      </div>
-      <div class="button save-to-list saved" v-if="isSave">
-        <svg
-          t="1670424607677"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="6120"
-          width="32"
-          height="32"
-        >
-          <path
-            d="M284.458667 941.397333c-36.437333 15.637333-68.48-7.68-64.896-47.168l22.613333-248.917333-164.394667-188.053333c-26.069333-29.824-13.653333-67.562667 24.789334-76.309334l243.370666-55.381333 127.786667-214.677333c20.288-34.090667 59.946667-34.069333 80.213333 0l127.786667 214.677333 243.370667 55.381333c38.656 8.789333 50.858667 46.485333 24.789333 76.309334l-164.394667 188.053333 22.741334 249.002667c3.605333 39.509333-28.458667 62.805333-64.896 47.146666l-229.504-98.517333-229.376 98.453333z"
-            fill="#333333"
-            p-id="6121"
-          ></path>
-        </svg>
+      <div class="button collect">
+        <collectVue></collectVue>
       </div>
     </div>
     <div class="right">
       <voiceVue class="button"></voiceVue>
-      <div class="button mode" @click="changeMode">
+      <div class="button mode cursor-pointer" @click="changeMode">
         <div class="single-cycle" v-if="mode == 1">
           <svg
             t="1670425135755"
@@ -168,7 +135,7 @@
           </svg>
         </div>
       </div>
-      <div class="button list">
+      <div class="button list cursor-pointer" @click="showCurrentList">
         <svg
           t="1670427187145"
           class="icon"
@@ -185,6 +152,8 @@
             p-id="9167"
           ></path>
         </svg>
+        <CurrentList :show="isShowCurrentList"></CurrentList>
+        <div v-if="isShowCurrentList"></div>
       </div>
     </div>
   </div>
@@ -192,15 +161,17 @@
 <script lang="ts">
 import { ref } from 'vue';
 import voiceVue from './voice/voice.vue';
+import collectVue from './collect/collect.vue';
+import CurrentList from '@/views/CurrentList/CurrentList.vue';
 export default {
   name: 'FooterRight',
-  components: { voiceVue },
+  components: { voiceVue, collectVue, CurrentList },
   setup() {
-    let mode = ref(1);
-    let voice = ref(true);
-    let wordOpen = ref(false);
-    let isLike = ref(false);
-    let isSave = ref(false);
+    const mode = ref(2);
+    const voice = ref(true);
+    const wordOpen = ref(false);
+    const isLike = ref(false);
+    const isSave = ref(false);
     const changeMode = (): void => {
       if (mode.value == 3) {
         mode.value = 1;
@@ -208,6 +179,7 @@ export default {
         mode.value++;
       }
     };
+
     const changeLike = (): void => {
       isLike.value = !isLike.value;
     };
@@ -217,6 +189,10 @@ export default {
     const openAndCloseWord = (): void => {
       wordOpen.value = !wordOpen.value;
     };
+    const isShowCurrentList = ref(false);
+    function showCurrentList() {
+      isShowCurrentList.value = !isShowCurrentList.value;
+    }
     return {
       mode,
       changeMode,
@@ -227,6 +203,8 @@ export default {
       changeLike,
       openAndCloseVoice,
       openAndCloseWord,
+      isShowCurrentList,
+      showCurrentList,
     };
   },
 };

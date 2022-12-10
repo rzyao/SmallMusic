@@ -7,7 +7,7 @@ const createLogin = () => {
     container.setAttribute('id', 'login');
     const loginVNode = h(Login);
     render(loginVNode, container);
-    document.body.appendChild(container);
+    document.getElementById('content')?.appendChild(container);
     return loginVNode;
   }
 };

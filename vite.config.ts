@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // https://vitejs.dev/config/
+import MusicApi from './env.musicapi.development';
 export default defineConfig({
   plugins: [vue(), vueJsx()],
   base: './',
@@ -20,5 +21,8 @@ export default defineConfig({
         additionalData: `@import "./src/assets/base.less";`,
       },
     },
+  },
+  define: {
+    VITE_MUSIC_API: { MusicApi },
   },
 });

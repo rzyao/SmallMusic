@@ -13,14 +13,15 @@
   </div>
 </template>
 <script lang="ts">
-import { useCounterStore } from '@/stores/counter';
+import { useSongStore } from '@/stores/song';
 import { ref, watch, reactive } from 'vue';
 import imgUrl from '@/assets/default_song_pic.png';
 export default {
   name: 'FooterLeft',
   components: {},
   setup() {
-    const store = useCounterStore();
+    const store = useSongStore();
+    const { changeDetails } = store;
     const name = ref('当前无歌曲');
     const picUrl = ref(imgUrl);
     const album = ref('');
@@ -42,7 +43,14 @@ export default {
       picUrl.value = res.body.songs[0].al.picUrl;
       album.value = res.body.songs[0].al.name;
       singers.list = res.body.songs[0].ar;
-      console.log(res.body.songs[0].al);
+      // 赋值公共变量songsDetails
+      const obj = {
+        id: ids,
+        name: res.body.songs[0].name,
+        singers: res.body.songs[0].ar,
+        album: res.body.songs[0].al.name,
+      };
+      changeDetails(obj);
     }
     return { isPlay, play, name, picUrl, album, singers };
   },
