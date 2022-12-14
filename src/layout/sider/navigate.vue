@@ -3,28 +3,25 @@
     <div
       class="sider-menu"
       @click.stop="change(item)"
-      :class="path.indexOf(item.name) > -1 ? 'overstriking' : ''"
+      :class="$route.path.indexOf(item.name) > -1 ? 'overstriking' : ''"
     >
       <router-link :to="item.path">
         <div class="sider-menu-name">{{ item.meta.title }}</div>
       </router-link>
-      <div>
-        <navigate v-show="selected == item.name" :menuData="item.children"></navigate>
+      <div v-show="selected == item.name">
+        <navigate :menuData="item.children"></navigate>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" scoped>
-import { ref, watch } from 'vue';
-import { useSongStore } from '@/stores/song';
+import { ref } from 'vue';
 export default {
   name: 'navigate',
   props: ['menuData'],
   setup() {
     const selected = ref('');
     const index = ref('Home');
-    const path = ref('Home');
-    const Store = useSongStore();
     function change(item: any) {
       if (item.children) {
         if (selected.value == item.name) {
@@ -34,13 +31,7 @@ export default {
         }
       }
     }
-    watch(
-      () => Store.currentRoute,
-      (val) => {
-        path.value = val;
-      }
-    );
-    return { selected, index, path, change };
+    return { selected, index, change };
   },
 };
 </script>

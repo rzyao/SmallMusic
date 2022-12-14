@@ -1,42 +1,82 @@
 <template>
   <div class="header-box" style="-webkit-app-region: drag">
-    <div class="logo" onselectstart="return false;">Small Music</div>
+    <div class="logo" onselectstart="return false;" @click="showrouter">Small Music</div>
     <div class="left-box no-drag">
-      <div class="arrow-left no-drag">
-        <svg
-          t="1669608668685"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="3279"
-          width="40"
-          height="40"
-        >
-          <path
-            d="M729.6 931.2l-416-425.6 416-416c9.6-9.6 9.6-25.6 0-35.2-9.6-9.6-25.6-9.6-35.2 0l-432 435.2c-9.6 9.6-9.6 25.6 0 35.2l432 441.6c9.6 9.6 25.6 9.6 35.2 0C739.2 956.8 739.2 940.8 729.6 931.2z"
-            p-id="3280"
-            fill="#ffffff"
-          ></path>
-        </svg>
+      <div class="left-circle">
+        <div class="arrow-left no-drag cursor-pointer" @click="back" v-if="!routeStore.isFirst">
+          <svg
+            t="1671039716551"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="3392"
+            width="16"
+            height="16"
+          >
+            <path
+              d="M377.052007 512l386.3073-388.203486L705.12909 65.290005 318.845327 453.493491l-58.20668 58.506509 58.20668 58.505485 386.283764 388.203486 58.230216-58.506509L377.052007 512zM377.052007 512"
+              fill="#ffffff"
+              p-id="3393"
+            ></path>
+          </svg>
+        </div>
+        <div class="arrow-left no-drag cursor-pointer" v-if="routeStore.isFirst">
+          <svg
+            t="1671039716551"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="3392"
+            width="16"
+            height="16"
+          >
+            <path
+              d="M377.052007 512l386.3073-388.203486L705.12909 65.290005 318.845327 453.493491l-58.20668 58.506509 58.20668 58.505485 386.283764 388.203486 58.230216-58.506509L377.052007 512zM377.052007 512"
+              fill="#e1b2b2"
+              p-id="3393"
+            ></path>
+          </svg>
+        </div>
       </div>
-      <div class="arrow-right no-drag">
-        <svg
-          t="1669608772553"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="4226"
-          width="40"
-          height="40"
-        >
-          <path
-            d="M761.6 489.6l-432-435.2c-9.6-9.6-25.6-9.6-35.2 0-9.6 9.6-9.6 25.6 0 35.2l416 416-416 425.6c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l432-441.6C771.2 515.2 771.2 499.2 761.6 489.6z"
-            p-id="4227"
-            fill="#ffffff"
-          ></path>
-        </svg>
+      <div class="right-circle">
+        <div class="arrow-right no-drag cursor-pointer" @click="next" v-if="!routeStore.isLast">
+          <svg
+            t="1671039618801"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="2893"
+            width="16"
+            height="16"
+          >
+            <path
+              d="M260.638647 900.202463l58.230216 58.506509L705.15365 570.505485l58.20668-58.505485-58.20668-58.506509L318.868863 65.290005l-58.230216 58.505485 386.3073 388.203486L260.638647 900.202463zM646.945947 512"
+              fill="#ffffff"
+              p-id="2894"
+            ></path>
+          </svg>
+        </div>
+        <div class="arrow-right no-drag cursor-pointer" v-if="routeStore.isLast">
+          <svg
+            t="1671039618801"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="2893"
+            width="16"
+            height="16"
+          >
+            <path
+              d="M260.638647 900.202463l58.230216 58.506509L705.15365 570.505485l58.20668-58.505485-58.20668-58.506509L318.868863 65.290005l-58.230216 58.505485 386.3073 388.203486L260.638647 900.202463zM646.945947 512"
+              fill="#e1b2b2"
+              p-id="2894"
+            ></path>
+          </svg>
+        </div>
       </div>
       <div class="serch-box">
         <a-input-search
@@ -167,10 +207,13 @@
 </template>
 <script lang="ts">
 import { ref } from 'vue';
+import router from '@/router';
+import { useRouteStore } from '@/stores/routeStore';
 export default {
   name: 'LayoutHeader',
   components: {},
   setup() {
+    const routeStore = useRouteStore();
     const serchText = ref('');
     const onSearch = (): void => {
       console.log('onserch');
@@ -185,7 +228,38 @@ export default {
     function maxmize() {
       window.electronApi.send('window-max');
     }
-    return { serchText, onSearch, close, minmize, maxmize };
+    function showrouter() {
+      //获取历史记录
+      console.log(
+        routeStore.isLast,
+        routeStore.isFirst,
+        routeStore.historyRoute,
+        routeStore.currtIndex
+      );
+    }
+    function back() {
+      routeStore.designRouteGo('back');
+      const obj = JSON.parse(JSON.stringify(routeStore.historyRoute[routeStore.currtIndex - 1]));
+      console.log(obj);
+      router.push(obj);
+    }
+    function next() {
+      routeStore.designRouteGo('next');
+      const obj = JSON.parse(JSON.stringify(routeStore.historyRoute[routeStore.currtIndex + 1]));
+      console.log(obj);
+      router.push(obj);
+    }
+    return {
+      serchText,
+      onSearch,
+      close,
+      minmize,
+      maxmize,
+      showrouter,
+      routeStore,
+      back,
+      next,
+    };
   },
 };
 </script>

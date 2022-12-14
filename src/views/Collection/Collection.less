@@ -1,0 +1,107 @@
+.content-box {
+    width: 100%;
+    height: 100%;
+
+    .content {
+        height: 100%;
+        width: calc(100% - 20px);
+        margin-left: 20px;
+        display: flex;
+        flex-direction: column;
+
+        .title-header {
+            height: 40px;
+            line-height: 40px;
+            font-size: 20px;
+            font-weight: 700;
+            width: 100%;
+            border-bottom: 1px solid #dfdfdf;
+        }
+
+        .title {
+            height: 30px;
+            border-bottom: 1px solid #dfdfdf;
+
+            .name,
+            .song-count,
+            .play-count {
+                height: 30px;
+                line-height: 30px;
+                display: inline-block;
+                color: rgba(0, 0, 0, 0.6);
+            }
+
+            .name {
+                width: 50%;
+                margin-left: 24px;
+            }
+
+            .song-count {
+                width: 20%;
+                text-align: right;
+            }
+
+            .play-count {
+                width: 20%;
+                text-align: right;
+            }
+        }
+
+        .lists-box {
+            flex: 1;
+            min-width: 0;
+
+            .lists {
+                display: block;
+                height: 100%;
+                overflow-y: hidden;
+            }
+
+            .list {
+                display: flex;
+                align-items: center;
+                min-height: 0;
+                height: 36px;
+                .icon,
+                .name,
+                .playCount,
+                .songCount {
+                    display: inline-block;
+                    color: rgba(0, 0, 0, 0.8);
+                }
+
+                .name {
+                    font-size: 16px;
+                    margin-left: 6px;
+                    font-family: 'Times New Roman', cursive;
+                    width: 50%;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                .playCount {
+                    width: 20%;
+                    text-align: right;
+                }
+
+                .songCount {
+                    width: 20%;
+                    text-align: right;
+                }
+
+                .icon {
+                    width: 18px;
+                    height: 18px;
+                    margin-top: 1px;
+                }
+            }
+            .list:hover{
+                background-color: #dfdfdf;
+            }
+            .background {
+                background-color: #f2f2f2;
+            }
+        }
+    }
+}

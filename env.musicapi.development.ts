@@ -36,7 +36,7 @@ const MusicApi = {
     return result;
   },
   getSongDetails: async (ids: string) => {
-    const url = `http://localhost:3000/playlist/detail?ids=${ids}`;
+    const url = `http://localhost:3000/song/detail?ids=${ids}`;
     const result: any = {};
     const res = await axios({ url, withCredentials: true });
     result.body = res.data;

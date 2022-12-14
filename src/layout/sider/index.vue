@@ -13,7 +13,6 @@ import Avatar from '@/layout/sider/avatar/index.vue';
 export default {
   name: 'LayoutSider',
   components: { navigate, Avatar },
-  data() {},
   setup() {
     const router = useRouter();
     const routers = router.getRoutes();

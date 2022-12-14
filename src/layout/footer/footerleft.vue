@@ -38,7 +38,7 @@ export default {
       }
     );
     async function getSongDetails(ids: string) {
-      const res: any = await window.musicApi.getSongDetails(ids);
+      const res: any = await window.devApi.getSongDetails(ids);
       name.value = res.body.songs[0].name;
       picUrl.value = res.body.songs[0].al.picUrl;
       album.value = res.body.songs[0].al.name;

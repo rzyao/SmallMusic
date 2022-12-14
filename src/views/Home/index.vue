@@ -37,14 +37,10 @@ export default {
     const password = ref('');
     const router = useRouter();
     const menuData = router.getRoutes();
-    console.log(menuData);
     const songLists: Songlist[] = reactive([]);
     onMounted(async () => {
       const res: any = await window.devApi.getLists(20);
-      console.log(res);
       const result = res.body.result;
-      console.log('获取歌单结果');
-      console.log(result);
       songLists.push(...result);
     });
     function toListDetails(id: number) {

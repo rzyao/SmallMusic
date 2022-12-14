@@ -1,14 +1,7 @@
 import { ref, reactive } from 'vue';
 import { defineStore } from 'pinia';
-import { getIndex } from '@/stores/func';
 import type { Song } from '@/stores/type';
 export const useSongStore = defineStore('song', () => {
-  // 当前路由
-  const currentRoute = ref('');
-  // 改变当前路由
-  function changeCurrentRoute(route: string) {
-    currentRoute.value = route;
-  }
   // 新的歌曲url
   const newSongUrl = ref('');
   // 切歌
@@ -28,7 +21,7 @@ export const useSongStore = defineStore('song', () => {
   // 播放下一首
   async function playNextSong() {
     console.log('播放下一首');
-    let index: number = getIndex(String(currentId.value), CurrentPlayList);
+    let index: number = CurrentPlayList.findIndex((item) => item.id == currentId.value);
     index++;
     const id = CurrentPlayList[index].id;
     currentId.value = id;
@@ -43,12 +36,12 @@ export const useSongStore = defineStore('song', () => {
   }
   // 播放上一首
   async function playLastSong() {
-    let index: number = getIndex(String(currentId.value), CurrentPlayList);
+    let index: number = CurrentPlayList.findIndex((item) => item.id === currentId.value);
     index--;
     const id = CurrentPlayList[index].id;
     currentId.value = id;
     const res: any = await window.devApi.getSongUrl(Number(id));
-    if (res && res.status == 200) {
+    if (res.body && res.body.code == 200) {
       const url = res.body.data[0].url;
       changeSong(url);
     } else {
@@ -61,7 +54,35 @@ export const useSongStore = defineStore('song', () => {
     const id = CurrentPlayList[0].id;
     currentId.value = id;
     const res: any = await window.devApi.getSongUrl(Number(id));
-    if (res && res.status == 200) {
+    if (res.body && res.body.code == 200) {
+      const url = res.body.data[0].url;
+      changeSong(url);
+    } else {
+      playNextSong();
+    }
+  }
+  // 播放指定的歌曲
+  async function playTheSong(id: string) {
+    console.log('播放指定的歌曲');
+    try {
+      const res: any = await window.devApi.getSongUrl(Number(id));
+      if (res.body && res.body.code == 200) {
+        currentId.value = id;
+        const url = res.body.data[0].url;
+        changeSong(url);
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+  // 添加到歌单并播放
+  async function addSongToPlayListAndPlay(song: Song) {
+    CurrentPlayList.push(song);
+    const id = song.id;
+    const res: any = await window.devApi.getSongUrl(Number(id));
+    if (res.body && res.body.code == 200) {
+      currentId.value = id;
       const url = res.body.data[0].url;
       changeSong(url);
     } else {
@@ -106,8 +127,6 @@ export const useSongStore = defineStore('song', () => {
     CurrentPlayListLength.value = CurrentPlayList.length;
   }
   return {
-    currentRoute,
-    changeCurrentRoute,
     newSongUrl,
     changeSong,
     currentId,
@@ -116,11 +135,13 @@ export const useSongStore = defineStore('song', () => {
     changMode,
     playNextSong,
     playLastSong,
+    playTheSong,
     songsDetails,
     changeDetails,
     CurrentPlayList,
     addSongToCurrentPlayList,
     insteadCurrentPlayList,
     CurrentPlayListLength,
+    addSongToPlayListAndPlay,
   };
 });

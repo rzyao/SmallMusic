@@ -13,6 +13,7 @@ export default {
 <style lang="less" scoped>
 .main-content {
   width: calc(100% - 17px);
-  height: 100%;
+  height: @middle-height;
+  overflow: hidden;
 }
 </style>

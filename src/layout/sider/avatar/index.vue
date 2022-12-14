@@ -11,7 +11,6 @@ import { onMounted } from 'vue';
 export default {
   name: 'Avatar',
   components: {},
-  data() {},
   setup() {
     const router = useRouter();
     const routes = router.getRoutes();

@@ -1,8 +1,6 @@
 import toLogin from '@/views/login/login';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Layout from '@/layout/index.vue';
-import { useSongStore } from '@/stores/song';
-const store = useSongStore();
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
@@ -22,10 +20,22 @@ const router = createRouter({
           component: () => import('@/views/Home/index.vue'),
         },
         {
+          path: '/MyLike',
+          name: 'MyLike',
+          meta: { title: '我喜欢的音乐' },
+          component: () => import('@/views/MyFavorite/MyFavorite.vue'),
+        },
+        {
           path: '/Collection',
           name: 'Collection',
-          meta: { title: '我的收藏' },
-          component: () => import('@/views/Collection/index.vue'),
+          meta: { title: '收藏的歌单' },
+          component: () => import('@/views/Collection/Collection.vue'),
+        },
+        {
+          path: '/CreatedList',
+          name: 'CreatedList',
+          meta: { title: '创建的歌单' },
+          component: () => import('@/views/CreatedList/CreatedList.vue'),
         },
         {
           path: '/Chat',
@@ -46,12 +56,6 @@ const router = createRouter({
           component: () => import('@/views/LocalList/index.vue'),
         },
         {
-          path: '/CloudMusic',
-          name: 'CloudMusic',
-          meta: { title: '云歌单' },
-          component: () => import('@/views/CloudMusic/index.vue'),
-        },
-        {
           path: '/ListDetails',
           name: 'ListDetails',
           meta: { title: '歌单详情' },
@@ -67,8 +71,14 @@ router.beforeEach((to, form, next) => {
     toLogin();
     return;
   }
-  store.changeCurrentRoute(to.path);
   next();
+});
+import { useRouteStore } from '@/stores/routeStore';
+const { addHistoryRoute } = useRouteStore();
+
+router.afterEach((to) => {
+  console.log(to);
+  addHistoryRoute(to.fullPath);
 });
 export default router;
 export const hiddenRouterNames: string[] = ['ListDetails'];

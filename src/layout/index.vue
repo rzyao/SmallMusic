@@ -17,10 +17,14 @@ import LayoutHeader from '@/layout/header/index.vue';
 import LayoutSider from '@/layout/sider/index.vue';
 import LayoutFooter from '@/layout/footer/index.vue';
 import MainContent from '@/layout/content/index.vue';
+import { useFavorite } from '@/stores/favorite';
 export default {
   name: 'defaultLayout',
   components: { LayoutHeader, LayoutSider, LayoutFooter, MainContent },
   setup() {
+    const store = useFavorite();
+    console.log(store);
+    store.getFavoriteListFromDB();
     return {};
   },
 };
