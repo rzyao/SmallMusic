@@ -6,7 +6,6 @@
   "author": "ayao",
   "scripts": {
     "dev": "vite",
-    "web": "node node_modules\\NeteaseCloudMusicApi\\app.js && npm run dev",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",

@@ -13,6 +13,7 @@
 <script lang="ts">
 import { watch, onMounted, ref } from 'vue';
 import { conversion, getProgress } from './musicPlay';
+import { useSongStore } from '@/stores/song';
 export default {
   name: 'MusicPlay',
   emits: ['TotalTime', 'CurrentTime', 'onProgress', 'State', 'onEnd', 'onLoadError'],
@@ -41,6 +42,7 @@ export default {
     watch(
       () => props.startTime,
       (newValue) => {
+        console.log(newValue);
         document.getElementsByTagName('audio')[0].currentTime = Number(newValue);
       }
     );
@@ -67,10 +69,13 @@ export default {
         emit('State', 'playing');
       });
     }
+    const store = useSongStore();
+    const { changeCurrentTime } = store;
     function watchCurrentTime() {
       let musicDom = document.getElementsByTagName('audio')[0];
       musicDom.addEventListener('timeupdate', () => {
         currentTime.value = musicDom.currentTime;
+        changeCurrentTime(musicDom.currentTime); // 修改全局变量currentTime
         const backCurrentTime = conversion(currentTime.value);
         CurrentTimeChanged(backCurrentTime);
         const progress = getProgress(currentTime.value, totalTime.value);

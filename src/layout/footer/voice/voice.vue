@@ -151,6 +151,7 @@ export default {
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    z-index: 99;
 
     .vertical-line {
       width: 2px;
@@ -217,6 +218,7 @@ export default {
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    z-index: 99;
 
     .vertical-line {
       width: 2px;

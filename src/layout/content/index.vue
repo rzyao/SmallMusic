@@ -12,8 +12,8 @@ export default {
 </script>
 <style lang="less" scoped>
 .main-content {
-  width: calc(100% - 17px);
-  height: @middle-height;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 </style>

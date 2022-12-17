@@ -9,7 +9,7 @@ export async function getVolume() {
     console.log('上次音量:  ' + res[0].value);
     const result = res[0].value;
     store.volume = Number(result);
-    num = Number(result) * 80;
+    num = Math.sqrt(Number(result)) * 80;
   } catch {
     console.log('获取上次音量失败');
     const result = 0.5;

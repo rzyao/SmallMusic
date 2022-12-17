@@ -1,5 +1,5 @@
 <template>
-  <div class="content-box">
+  <div class="content-box scroll">
     <div class="content">
       <div class="recommend">
         <div class="recommend-word">推荐歌单</div>

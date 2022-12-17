@@ -79,8 +79,8 @@
     </div>
     <div class="right">
       <voiceVue class="button"></voiceVue>
-      <div class="button mode cursor-pointer" @click="changeMode">
-        <div class="single-cycle" v-if="mode == 1">
+      <div class="button mode cursor-pointer" @click="songStore.changeMode">
+        <div class="single-cycle" v-if="songStore.playMode == 1">
           <svg
             t="1670425135755"
             class="icon"
@@ -98,7 +98,7 @@
             ></path>
           </svg>
         </div>
-        <div class="list-cycle" v-if="mode == 2">
+        <div class="list-cycle" v-if="songStore.playMode == 2">
           <svg
             t="1670425165697"
             class="icon"
@@ -116,7 +116,7 @@
             ></path>
           </svg>
         </div>
-        <div class="random" v-if="mode == 3">
+        <div class="random" v-if="songStore.playMode == 3">
           <svg
             t="1670425197033"
             class="icon"
@@ -152,14 +152,14 @@
             p-id="9167"
           ></path>
         </svg>
-        <CurrentList :show="isShowCurrentList"></CurrentList>
+        <CurrentList v-model:show="isShowCurrentList"></CurrentList>
         <div v-if="isShowCurrentList"></div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import voiceVue from './voice/voice.vue';
 import collectVue from './collect/collect.vue';
 import CurrentList from '@/views/CurrentList/CurrentList.vue';
@@ -169,17 +169,9 @@ export default {
   name: 'FooterRight',
   components: { voiceVue, collectVue, CurrentList },
   setup() {
-    const mode = ref(2);
     const voice = ref(true);
     const wordOpen = ref(false);
     const isSave = ref(false);
-    const changeMode = (): void => {
-      if (mode.value == 3) {
-        mode.value = 1;
-      } else {
-        mode.value++;
-      }
-    };
     const songStore = useSongStore();
     const favoriteStore = useFavorite();
     const isLike = computed(() => {
@@ -210,8 +202,6 @@ export default {
       isShowCurrentList.value = !isShowCurrentList.value;
     }
     return {
-      mode,
-      changeMode,
       voice,
       wordOpen,
       isLike,
@@ -221,6 +211,7 @@ export default {
       openAndCloseWord,
       isShowCurrentList,
       showCurrentList,
+      songStore,
     };
   },
 };

@@ -30,14 +30,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@header-height: 62px;
-@footer-height: 71px;
-@middle-height: calc(100vh - @header-height - @footer-height);
-@sider-width: 200px;
-@middle-top: @header-height;
-@middle-bottom: @footer-height;
-@content-width: calc(100vw - @sider-width);
-
 #header {
   position: fixed;
   top: 0;
@@ -51,9 +43,8 @@ export default {
   left: 0;
   top: @middle-top;
   bottom: @middle-bottom;
-  width: calc(@content-width + 17px);
-  overflow-x: hidden;
-  overflow-y: scroll;
+  width: @content-width;
+  overflow: hidden;
 }
 
 #sider {

@@ -1,21 +1,65 @@
 import { ref, reactive } from 'vue';
 import { defineStore } from 'pinia';
-import type { Song } from '@/stores/type';
+import type { Song, SongDetails } from '@/stores/type';
+import picUrl from '@/assets/default_song_pic.png';
 export const useSongStore = defineStore('song', () => {
+  // 当前歌曲的播放时间
+  const currentTime = ref(0);
+  // 改变当前歌曲的播放时间
+  function changeCurrentTime(time: number) {
+    currentTime.value = time;
+  }
   // 新的歌曲url
   const newSongUrl = ref('');
-  // 切歌
-  function changeSong(url: any) {
-    newSongUrl.value = url;
-  }
   // 当前正在播放的歌曲id
   const currentId = ref('0');
+  // 当前播放模式 1:单曲循环 2:列表循环 3:随机播放
+  const playMode = ref(2);
+  // 当前播放歌单
+  const CurrentPlayList: Song[] = reactive([]);
+  // 当前播放歌曲的详情
+  const currentSongDetails: SongDetails = reactive({
+    id: '0',
+    name: '当前无播放歌曲',
+    singers: [{ id: 0, name: '未知' }],
+    album: '',
+    picUrl: picUrl,
+  });
+  // 请求歌曲详情
+  async function getSongDetails(id: any) {
+    const ids = String(id);
+    const res: any = await window.devApi.getSongDetails(ids);
+    if (res.body && res.body.code == 200) {
+      const obj: SongDetails = {
+        id: res.body.songs[0].id,
+        name: res.body.songs[0].name,
+        singers: res.body.songs[0].ar,
+        album: res.body.songs[0].al.name,
+        picUrl: res.body.songs[0].al.picUrl,
+      };
+      changeCurrentSongDetails(obj);
+      return obj;
+    }
+  }
+  // 改变当前播放歌曲的详情
+  function changeCurrentSongDetails(obj: SongDetails) {
+    currentSongDetails.id = obj.id;
+    currentSongDetails.name = obj.name;
+    currentSongDetails.singers = obj.singers;
+    currentSongDetails.album = obj.album;
+    currentSongDetails.picUrl = obj.picUrl;
+  }
+  // 切歌
+  function changeSong(url: any) {
+    console.log(url);
+    newSongUrl.value = url;
+  }
+
   function changeCurrentId(id: string) {
     currentId.value = id;
   }
-  // 当前播放模式 1:单曲循环 2:列表循环 3:随机播放
-  const playMode = ref(1);
-  function changMode(n: number) {
+
+  function changeMode(n: number) {
     playMode.value = n;
   }
   // 播放下一首
@@ -25,12 +69,8 @@ export const useSongStore = defineStore('song', () => {
     index++;
     const id = CurrentPlayList[index].id;
     currentId.value = id;
-    const res: any = await window.devApi.getSongUrl(Number(id));
-    if (res && res.body.data[0].url != null) {
-      const url = res.body.data[0].url;
-      changeSong(url);
-      console.log(res.body);
-    } else {
+    const res: any = await playTheSong(id);
+    if (!res) {
       playNextSong();
     }
   }
@@ -40,12 +80,9 @@ export const useSongStore = defineStore('song', () => {
     index--;
     const id = CurrentPlayList[index].id;
     currentId.value = id;
-    const res: any = await window.devApi.getSongUrl(Number(id));
-    if (res.body && res.body.code == 200) {
-      const url = res.body.data[0].url;
-      changeSong(url);
-    } else {
-      playLastSong;
+    const res: any = await playTheSong(id);
+    if (!res) {
+      playLastSong();
     }
   }
   // 播放第一首
@@ -53,16 +90,13 @@ export const useSongStore = defineStore('song', () => {
     console.log('playFirstSong');
     const id = CurrentPlayList[0].id;
     currentId.value = id;
-    const res: any = await window.devApi.getSongUrl(Number(id));
-    if (res.body && res.body.code == 200) {
-      const url = res.body.data[0].url;
-      changeSong(url);
-    } else {
+    const res: any = await playTheSong(id);
+    if (!res) {
       playNextSong();
     }
   }
   // 播放指定的歌曲
-  async function playTheSong(id: string) {
+  async function playTheSong(id: any) {
     console.log('播放指定的歌曲');
     try {
       const res: any = await window.devApi.getSongUrl(Number(id));
@@ -70,6 +104,14 @@ export const useSongStore = defineStore('song', () => {
         currentId.value = id;
         const url = res.body.data[0].url;
         changeSong(url);
+        changeCurrentId(id);
+        const song = await getSongDetails(id);
+        // 判断当前播放列表是否存在该歌曲,如果不存在则添加到播放列表
+        const index = CurrentPlayList.findIndex((item) => item.id == id);
+        if (index == -1) {
+          addSongToCurrentPlayList(song as Song);
+        }
+        return true;
       }
     } catch (error) {
       console.log(error);
@@ -89,25 +131,16 @@ export const useSongStore = defineStore('song', () => {
       playNextSong();
     }
   }
-  // 当前歌曲详情
-  const songsDetails = reactive({
-    id: '0',
-    name: '',
-    singers: [],
-    album: '',
-  });
-  function changeDetails(obj: { id: string; name: string; singers: []; album: string }) {
-    songsDetails.id = obj.id;
-    songsDetails.name = obj.name;
-    songsDetails.singers = obj.singers;
-    songsDetails.album = obj.album;
-  }
-  // 当前播放歌单
-  const CurrentPlayList: Song[] = reactive([]);
+
   // 添加到当前播放歌单
   function addSongToCurrentPlayList(song: Song) {
-    CurrentPlayList.push(song);
-    getCurrentPlayListLength();
+    const obj: Song = {
+      id: song.id,
+      name: song.name,
+      singers: song.singers,
+      album: song.album,
+    };
+    CurrentPlayList.push(obj);
   }
   // 清空当前播放歌单
   function clearCurrentPlayList() {
@@ -118,30 +151,31 @@ export const useSongStore = defineStore('song', () => {
     clearCurrentPlayList();
     CurrentPlayList.push(...list);
     playFirstSong();
-    getCurrentPlayListLength();
   }
-  // 当前播放的歌单中的歌曲数量
-  const CurrentPlayListLength = ref(0);
-  // 获取当前播放歌单中的歌曲数量
-  function getCurrentPlayListLength() {
-    CurrentPlayListLength.value = CurrentPlayList.length;
+  // 添加整个歌单到当前播放歌单
+  function addAllSongToCurrentList(list: Song[]) {
+    CurrentPlayList.push(...list);
+    if (CurrentPlayList.length == list.length) {
+      playFirstSong();
+    }
   }
   return {
     newSongUrl,
-    changeSong,
     currentId,
     changeCurrentId,
     playMode,
-    changMode,
+    changeMode,
     playNextSong,
     playLastSong,
     playTheSong,
-    songsDetails,
-    changeDetails,
+    currentSongDetails,
+    changeCurrentSongDetails,
     CurrentPlayList,
     addSongToCurrentPlayList,
     insteadCurrentPlayList,
-    CurrentPlayListLength,
     addSongToPlayListAndPlay,
+    addAllSongToCurrentList,
+    currentTime,
+    changeCurrentTime,
   };
 });

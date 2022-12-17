@@ -2,7 +2,7 @@
   <div class="header-box" style="-webkit-app-region: drag">
     <div class="logo" onselectstart="return false;" @click="showrouter">Small Music</div>
     <div class="left-box no-drag">
-      <div class="left-circle">
+      <div class="left-circle z-index-3">
         <div class="arrow-left no-drag cursor-pointer" @click="back" v-if="!routeStore.isFirst">
           <svg
             t="1671039716551"
@@ -40,7 +40,7 @@
           </svg>
         </div>
       </div>
-      <div class="right-circle">
+      <div class="right-circle z-index-3">
         <div class="arrow-right no-drag cursor-pointer" @click="next" v-if="!routeStore.isLast">
           <svg
             t="1671039618801"

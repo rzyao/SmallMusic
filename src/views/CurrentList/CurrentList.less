@@ -1,9 +1,18 @@
+.mask {
+    position: fixed;
+    left: 0;
+    top: @header-height;
+    height: @middle-height;
+    width: calc(100% - 380px);
+    background-color: #000000;
+    opacity: 0.1;
+}
 .current-list-box {
     position: fixed;
     right: 0;
     height: @middle-height;
     bottom: @footer-height;
-    width: 500px;
+    width: 380px;
     overflow: hidden;
     background-color: #ffffff;
     border-left: 1px solid #e7e7e7;
@@ -112,7 +121,7 @@
 
         .song-name {
             display: inline-block;
-            width: 200px;
+            width: 100px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -120,7 +129,7 @@
 
         .singers {
             display: inline-block;
-            width: 150px;
+            width: 100px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

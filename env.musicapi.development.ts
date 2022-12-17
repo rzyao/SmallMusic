@@ -42,5 +42,12 @@ const MusicApi = {
     result.body = res.data;
     return result;
   },
+  getSongWord: async (id: number) => {
+    const url = `http://localhost:3000/lyric?id=${id}`;
+    const result: any = {};
+    const res = await axios({ url, withCredentials: true });
+    result.body = res.data;
+    return result;
+  },
 };
 export default MusicApi;

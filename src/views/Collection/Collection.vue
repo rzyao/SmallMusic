@@ -4,8 +4,8 @@
       <div class="title-header">我收藏的歌单</div>
       <div class="title">
         <div class="name">歌单</div>
-        <div class="song-count">歌曲数</div>
-        <div class="play-count">播放数</div>
+        <div class="song-count">播放数</div>
+        <div class="play-count">歌曲数</div>
       </div>
       <div class="lists-box">
         <div class="lists scroll">

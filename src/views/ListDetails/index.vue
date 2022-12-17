@@ -14,7 +14,7 @@
             <div class="triangle"></div>
             <div class="text white">播放全部</div>
           </div>
-          <div class="add-to-playlist edit eidt-max-height cursor-pointer">
+          <div class="add-to-playlist edit eidt-max-height cursor-pointer" @click="addAll">
             <div class="icon">
               <svg
                 t="1669995111154"
@@ -274,7 +274,7 @@ export default {
     const down = ref<HTMLInputElement | null>(null);
     const text = ref<HTMLInputElement | null>(null);
     const store = useSongStore();
-    const { changeSong, insteadCurrentPlayList } = store;
+    const { playTheSong, insteadCurrentPlayList, addAllSongToCurrentList } = store;
     const songs: Song[] = reactive([]);
     function RML4(num: number) {
       const length = String(num).length;
@@ -341,16 +341,15 @@ export default {
         songs.push(song);
       });
     });
-    async function playSong(id: string) {
-      const res: any = await window.devApi.getSongUrl(Number(id));
-      console.log(res);
-      console.log(res.body.data[0].url);
-      const url = res.body.data[0].url;
-      changeSong(url);
+    function playSong(id: string) {
+      playTheSong(id);
     }
     function playAll() {
       console.log('playAll');
       insteadCurrentPlayList(songs);
+    }
+    function addAll() {
+      addAllSongToCurrentList(songs);
     }
     const isDown = ref(false);
     function changeHeight() {
@@ -392,6 +391,7 @@ export default {
       songs,
       playSong,
       playAll,
+      addAll,
       changeHeight,
       down,
       isDown,

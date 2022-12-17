@@ -50,12 +50,6 @@ const router = createRouter({
           component: () => import('@/views/LocalMusic/index.vue'),
         },
         {
-          path: '/LocalList',
-          name: 'LocalList',
-          meta: { title: '离线歌单' },
-          component: () => import('@/views/LocalList/index.vue'),
-        },
-        {
           path: '/ListDetails',
           name: 'ListDetails',
           meta: { title: '歌单详情' },

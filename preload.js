@@ -40,4 +40,7 @@ contextBridge.exposeInMainWorld('musicApi', {
   getSongDetails: (param) => {
     return ipcRenderer.invoke('dialog:getSongDetails', param);
   },
+  getSongWord: (param) => {
+    return ipcRenderer.invoke('dialog:getSongWord', param);
+  },
 });

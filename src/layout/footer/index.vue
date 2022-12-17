@@ -118,8 +118,13 @@ export default {
     const currentTime = ref('0:00');
     const isPlay = ref(false);
     const styleWidth = ref('');
+    const draging = ref(false);
     const play = (): void => {
       isPlay.value = !isPlay.value;
+      if (mute.value) {
+        //如果本来是静音,播放依然是静音
+        mute.value = true;
+      }
     };
     watch(
       () => store.newSongUrl,
@@ -129,15 +134,29 @@ export default {
         isPlay.value = false;
         nextTick(() => {
           isPlay.value = true;
+          if (mute.value) {
+            //如果本来是静音,播放依然是静音
+            mute.value = true;
+          }
         });
       }
     );
     function next() {
+      isPlay.value = false;
       console.log('next');
-      playNextSong();
+      if (store.playMode == 1) {
+        console.log('单曲循环');
+        startTime.value = 0;
+        setTimeout(() => {
+          isPlay.value = true;
+        }, 0);
+      } else {
+        console.log('播放下一首');
+        playNextSong();
+      }
     }
     function last() {
-      console.log('last');
+      console.log('播放上一首');
       playLastSong();
     }
     function LoadUrlError() {
@@ -148,7 +167,13 @@ export default {
       const minutes = Math.floor(time / 60);
       let second = time % 60;
       second = Math.round(second);
-      const total = minutes + ':' + second;
+      let seconds = '';
+      if (second < 10) {
+        seconds = `0${second}`;
+      } else {
+        seconds = `${second}`;
+      }
+      const total = minutes + ':' + seconds;
       return total;
     }
     function getTotalTime(time: any) {
@@ -160,19 +185,21 @@ export default {
     }
     const progress = ref('');
     function getProgress(num: number) {
-      progress.value = String(num) + '%';
-      const el = document.getElementsByClassName('progress-line')[0] as HTMLElement;
-      el.style.setProperty('width', progress.value);
-      const el1 = document.getElementsByClassName('point')[0] as HTMLElement;
-      el1.style.setProperty('left', progress.value);
+      if (!draging.value) {
+        progress.value = String(num) + '%';
+        const el = document.getElementsByClassName('progress-line')[0] as HTMLElement;
+        el.style.setProperty('width', progress.value);
+        const el1 = document.getElementsByClassName('point')[0] as HTMLElement;
+        el1.style.setProperty('left', progress.value);
+      }
     }
     function mouseDown() {
+      draging.value = true;
       let isMouseDown = true;
       // 鼠标初始位置
       // 外层盒子初始位置
       const line = document.getElementsByClassName('line')[0] as HTMLElement;
       const line_x = line.getBoundingClientRect().x;
-      console.log(line_x);
       const progress = document.getElementsByClassName('progress-line')[0] as HTMLElement;
       let point = document.getElementsByClassName('point')[0] as HTMLElement;
       point.style.cursor = 'move';
@@ -193,12 +220,13 @@ export default {
         }
       };
       document.onmouseup = () => {
-        console.log('onmouseup');
         isMouseDown = false;
         point.style.cursor = 'default';
         document.onmousemove = null;
         const per = (distance / 360) * 100;
         startTime.value = (totalTime.value * per) / 100;
+        draging.value = false;
+        document.onmouseup = null;
       };
     }
     return {

@@ -162,7 +162,7 @@
             ></path>
           </svg>
         </div>
-        <div class="play cursor-pointer" @click="playSong(song.id)">
+        <div class="play cursor-pointer" @click="playSong(song)">
           <svg
             t="1670158626603"
             class="icon"
@@ -211,7 +211,7 @@ export default {
     const down = ref<HTMLInputElement | null>(null);
     const text = ref<HTMLInputElement | null>(null);
     const store = useSongStore();
-    const { changeSong, insteadCurrentPlayList } = store;
+    const { playTheSong, insteadCurrentPlayList } = store;
     const songs: Song[] = reactive([]);
     const listDetails = reactive({
       id: 0,
@@ -229,10 +229,9 @@ export default {
     function changeFavorite(id: any) {
       favorite.changeFavorite(id);
     }
-    async function playSong(id: string) {
-      const res: any = await window.devApi.getSongUrl(Number(id));
-      const url = res.body.data[0].url;
-      changeSong(url);
+    async function playSong(song: any) {
+      const id = song.id;
+      playTheSong(id);
     }
     function playAll() {
       console.log('playAll');

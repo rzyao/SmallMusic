@@ -1,6 +1,7 @@
 <template>
   <transition name="fade">
     <div class="current-list-box" v-show="props.show" @click.stop="">
+      <div class="mask" @click="close"></div>
       <div class="list-details">
         <div class="name">当前播放</div>
         <div class="edit">
@@ -107,6 +108,7 @@ import { computed } from 'vue';
 const props = defineProps<{
   show: boolean;
 }>();
+const emit = defineEmits(['update:show']);
 const Store = useSongStore();
 const CurrentPlayList = computed(() => Store.CurrentPlayList);
 const currentId = computed(() => Store.currentId);
@@ -118,19 +120,56 @@ function nextSong(id: string) {
 function showData() {
   console.log(CurrentPlayList);
 }
+function close() {
+  console.log('close');
+  emit('update:show', false);
+}
 </script>
 <style lang="less" scoped>
 @import './CurrentList.less';
-.fade-enter-active,
+.fade-enter-active {
+  animation: totop 0.6s;
+}
+@keyframes totop {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: @middle-height;
+  }
+}
 .fade-leave-active {
-  transition: height 1s;
+  animation: tobottom 0.6s;
 }
-.fade-enter-from,
-.fade-leave-to {
-  height: 0px;
+@keyframes tobottom {
+  0% {
+    height: @middle-height;
+  }
+  100% {
+    height: 0;
+  }
 }
-.fade-enter-to,
-.fade-leave-from {
-  height: @middle-height;
+//背景色动画
+.fade-enter-active .mask {
+  animation: toleft 0.6s linear;
+}
+@keyframes toleft {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: calc(100% - 380px);
+  }
+}
+.fade-leave-active .mask {
+  animation: tototop 0.6s linear;
+}
+@keyframes tototop {
+  0% {
+    height: @middle-height;
+  }
+  100% {
+    height: 0;
+  }
 }
 </style>

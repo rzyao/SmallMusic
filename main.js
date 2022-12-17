@@ -67,7 +67,21 @@ const {
   playlist_track_all,
   song_url,
   song_detail,
+  lyric,
 } = require('NeteaseCloudMusicApi');
+// 获取歌词
+async function getSongWord(param) {
+  try {
+    const result = await lyric({
+      id: param,
+    });
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // 搜索歌曲
 async function searchSong(name) {
   try {
@@ -157,5 +171,9 @@ ipcMain.handle('dialog:getSongUrl', async (e, param) => {
 });
 ipcMain.handle('dialog:getSongDetails', async (e, param) => {
   res = await getSongDetails(param);
+  return res;
+});
+ipcMain.handle('dialog:getSongWord', async (e, param) => {
+  res = await getSongWord(param);
   return res;
 });

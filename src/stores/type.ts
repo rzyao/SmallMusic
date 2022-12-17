@@ -8,3 +8,10 @@ export interface Song {
   singers: singer[];
   album: string;
 }
+export interface SongDetails {
+  id: string;
+  name: string;
+  singers: singer[];
+  album: string;
+  picUrl: string;
+}
