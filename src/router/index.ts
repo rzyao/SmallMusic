@@ -55,6 +55,12 @@ const router = createRouter({
           meta: { title: '歌单详情' },
           component: () => import('@/views/ListDetails/index.vue'),
         },
+        {
+          path: '/SearchResult',
+          name: 'SearchResult',
+          meta: { title: '搜索结果' },
+          component: () => import('@/views/SearchResult/SearchResult.vue'),
+        },
       ],
     },
   ],
@@ -75,4 +81,4 @@ router.afterEach((to) => {
   addHistoryRoute(to.fullPath);
 });
 export default router;
-export const hiddenRouterNames: string[] = ['ListDetails'];
+export const hiddenRouterNames: string[] = ['ListDetails', 'SearchResult'];

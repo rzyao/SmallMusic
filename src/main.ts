@@ -11,11 +11,12 @@ String.prototype.byteLength = function () {
   return totalLength;
 };
 import MusicApi from '../env.musicapi.development';
-if (import.meta.env.DEV) {
-  window.devApi = MusicApi as any;
-} else {
-  window.devApi = window.musicApi;
-}
+window.devApi = window.musicApi;
+// if (import.meta.env.DEV) {
+//   window.devApi = MusicApi as any;
+// } else {
+//   window.devApi = window.musicApi;
+// }
 import { createApp } from 'vue';
 import pinia from './stores/store';
 
@@ -27,6 +28,9 @@ import './assets/main.css';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+
 //递归组件
 import navigate from './layout/sider/navigate.vue';
 
@@ -35,6 +39,7 @@ const app = createApp(App);
 app.use(pinia);
 app.use(router);
 app.use(Antd);
+app.use(ElementPlus);
 app.component(navigate as any);
 
 app.mount('#app');

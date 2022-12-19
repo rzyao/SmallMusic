@@ -2,6 +2,7 @@
 // main.js
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron');
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 const path = require('path');
 const createWindow = () => {
   // Create the browser window.
@@ -18,9 +19,12 @@ const createWindow = () => {
     },
   });
   // 加载 index.html
-  mainWindow.loadFile('./dist/index.html');
+  // mainWindow.loadFile('./dist/index.html');
+  console.log('process.argv[2] : ' + process.argv[2]);
+  // mainWindow.loadFile(process.argv[2]);
+  mainWindow.loadURL(process.argv[2]);
   // 打开开发工具
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools();
 
   //接收最小化命令
   ipcMain.on('window-min', function () {
@@ -82,12 +86,11 @@ async function getSongWord(param) {
   }
 }
 
-// 搜索歌曲
-async function searchSong(name) {
+// 搜索歌曲 默认为 1 即单曲 , 取值意义 : 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单,
+async function searchSong(param) {
   try {
-    const result = await search({
-      keywords: name,
-    });
+    console.log(param);
+    const result = await search(param);
     console.log(result);
     return result;
   } catch (error) {

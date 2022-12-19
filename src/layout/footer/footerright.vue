@@ -135,7 +135,7 @@
           </svg>
         </div>
       </div>
-      <div class="button list cursor-pointer" @click="showCurrentList">
+      <div class="button list cursor-pointer" @click.stop="showCurrentList">
         <svg
           t="1670427187145"
           class="icon"

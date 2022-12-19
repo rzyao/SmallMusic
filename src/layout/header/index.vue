@@ -1,9 +1,9 @@
 <template>
   <div class="header-box" style="-webkit-app-region: drag">
-    <div class="logo" onselectstart="return false;" @click="showrouter">Small Music</div>
+    <div class="logo" onselectstart="return false;">Small Music</div>
     <div class="left-box no-drag">
-      <div class="left-circle z-index-3">
-        <div class="arrow-left no-drag cursor-pointer" @click="back" v-if="!routeStore.isFirst">
+      <div class="left-circle">
+        <div class="arrow-left no-drag cursor-pointer" @click="back" v-if="!isFirst">
           <svg
             t="1671039716551"
             class="icon"
@@ -21,7 +21,7 @@
             ></path>
           </svg>
         </div>
-        <div class="arrow-left no-drag cursor-pointer" v-if="routeStore.isFirst">
+        <div class="arrow-left no-drag cursor-pointer" v-if="isFirst">
           <svg
             t="1671039716551"
             class="icon"
@@ -40,8 +40,8 @@
           </svg>
         </div>
       </div>
-      <div class="right-circle z-index-3">
-        <div class="arrow-right no-drag cursor-pointer" @click="next" v-if="!routeStore.isLast">
+      <div class="right-circle">
+        <div class="arrow-right no-drag cursor-pointer" @click="next" v-if="!isLast">
           <svg
             t="1671039618801"
             class="icon"
@@ -59,7 +59,7 @@
             ></path>
           </svg>
         </div>
-        <div class="arrow-right no-drag cursor-pointer" v-if="routeStore.isLast">
+        <div class="arrow-right no-drag cursor-pointer" v-if="isLast">
           <svg
             t="1671039618801"
             class="icon"
@@ -79,13 +79,16 @@
         </div>
       </div>
       <div class="serch-box">
-        <a-input-search
-          class="serch"
-          v-model:value="serchText"
-          placeholder="找首歌来听"
-          style="width: 300px"
-          @search="onSearch"
-        />
+        <el-input
+          v-model="serchText"
+          placeholder="开始你的音乐旅程"
+          class="input-with-select"
+          @keyup.enter="onSearch"
+        >
+          <template #append>
+            <el-button :icon="Search" @click="onSearch" />
+          </template>
+        </el-input>
       </div>
     </div>
     <div class="right-box no-drag">
@@ -206,18 +209,24 @@
   </div>
 </template>
 <script lang="ts">
-import { ref } from 'vue';
-import router from '@/router';
+import { ref, computed } from 'vue';
 import { useRouteStore } from '@/stores/routeStore';
+import { Search } from '@element-plus/icons-vue';
+// import router from '@/router';
+import { useRouter } from 'vue-router';
 export default {
   name: 'LayoutHeader',
   components: {},
   setup() {
+    const router = useRouter();
     const routeStore = useRouteStore();
+    const { designRouteGo } = routeStore;
+    const isFirst = computed(() => routeStore.isFirst);
+    const isLast = computed(() => routeStore.isLast);
     const serchText = ref('');
-    const onSearch = (): void => {
-      console.log('onserch');
-    };
+    function onSearch() {
+      router.push({ path: '/SearchResult', query: { serchText: serchText.value } });
+    }
     function close() {
       console.log('click close');
       window.electronApi.send('close');
@@ -228,23 +237,15 @@ export default {
     function maxmize() {
       window.electronApi.send('window-max');
     }
-    function showrouter() {
-      //获取历史记录
-      console.log(
-        routeStore.isLast,
-        routeStore.isFirst,
-        routeStore.historyRoute,
-        routeStore.currtIndex
-      );
-    }
+    // const historyRoute = computed(() => routeStore.historyRoute);
     function back() {
-      routeStore.designRouteGo('back');
+      designRouteGo('back');
       const obj = JSON.parse(JSON.stringify(routeStore.historyRoute[routeStore.currtIndex - 1]));
       console.log(obj);
       router.push(obj);
     }
     function next() {
-      routeStore.designRouteGo('next');
+      designRouteGo('next');
       const obj = JSON.parse(JSON.stringify(routeStore.historyRoute[routeStore.currtIndex + 1]));
       console.log(obj);
       router.push(obj);
@@ -255,10 +256,11 @@ export default {
       close,
       minmize,
       maxmize,
-      showrouter,
-      routeStore,
       back,
       next,
+      isFirst,
+      isLast,
+      Search,
     };
   },
 };

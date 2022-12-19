@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "env.musicApi.d.ts", "env.musicApi.d.ts","env.musicapi.development.ts"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "env.musicApi.d.ts", "env.musicApi.d.ts","env.musicapi.development.ts", "plugins"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,

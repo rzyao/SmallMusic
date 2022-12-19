@@ -1,3 +1,4 @@
+import { devPlugin } from './plugins/devplugin';
 import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
@@ -7,7 +8,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 // https://vitejs.dev/config/
 import MusicApi from './env.musicapi.development';
 export default defineConfig({
-  plugins: [vue(), vueJsx()],
+  plugins: [vue(), vueJsx(), devPlugin()],
   base: './',
   resolve: {
     alias: {

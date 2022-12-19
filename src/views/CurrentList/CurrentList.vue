@@ -124,6 +124,10 @@ function close() {
   console.log('close');
   emit('update:show', false);
 }
+
+window.addEventListener('click', () => {
+  emit('update:show', false);
+});
 </script>
 <style lang="less" scoped>
 @import './CurrentList.less';

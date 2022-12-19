@@ -26,10 +26,8 @@ const selected = ref(0);
 watch(
   () => selected.value,
   () => {
-    console.log('scroll');
     const item = document.getElementsByClassName('word-selected')[0] as HTMLElement;
     const div = document.getElementById('scroll');
-    console.log(div?.offsetHeight);
     div?.scrollTo({ top: item.offsetTop - div?.offsetHeight / 2, left: 0, behavior: 'smooth' });
   }
 );

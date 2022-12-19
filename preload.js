@@ -22,7 +22,7 @@ contextBridge.exposeInMainWorld('electronApi', {
   },
 });
 contextBridge.exposeInMainWorld('musicApi', {
-  searchSong: (param) => {
+  search: (param) => {
     return ipcRenderer.invoke('dialog:search', param);
   },
   getLists: (param) => {

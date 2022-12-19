@@ -13,11 +13,9 @@ export function useGetCurrentTime() {
 export async function useGetWords(id: number) {
   const result: any[] = [];
   const res: any = await window.devApi.getSongWord(Number(id));
-  console.log(res.body.lrc.lyric);
   const reg2 = /]/;
   const reg = /\n/;
   const data = res.body.lrc.lyric.split(reg);
-  console.log(data);
   data.forEach((element: string) => {
     const arr = element.split(reg2);
     const time = arr[0]?.replace('[', '');
@@ -75,7 +73,6 @@ export function useTimeToSecond(time: string) {
   const reg = /:/;
   if (time) {
     const arr = time.split(reg);
-    console.log(arr);
     if (arr[0]) {
       result = Number(arr[0]) * 60 + Number(arr[1]);
     }

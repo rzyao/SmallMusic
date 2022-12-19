@@ -7,6 +7,7 @@ export interface musicApi {
   getSongUrl: (id: number) => Promise<void>;
   getSongDetails: (ids: string) => Promise<void>;
   getSongWord: (id: number) => Promise<void>;
+  search: (param: any) => Promise<void>;
 }
 export interface IElectronApi {
   send: (string) => Promise<void>;

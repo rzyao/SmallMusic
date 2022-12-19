@@ -59,8 +59,13 @@ export const useSongStore = defineStore('song', () => {
     currentId.value = id;
   }
 
-  function changeMode(n: number) {
-    playMode.value = n;
+  function changeMode() {
+    if (playMode.value == 3) {
+      playMode.value = 1;
+    } else {
+      playMode.value++;
+    }
+    console.log(playMode.value);
   }
   // 播放下一首
   async function playNextSong() {

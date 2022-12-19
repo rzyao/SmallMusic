@@ -24,6 +24,30 @@
             border-radius: 20px;
             overflow: hidden;
             margin-left: 10px;
+
+            @bdclolor: #e33e3e;
+            ::v-deep .el-input-group {
+                border-radius: 30px;
+                overflow: hidden;
+                background-color: @bdclolor;
+                border-color: @bdclolor;
+                padding:0;
+                color: #ffffff;
+            }
+            ::v-deep .el-input__wrapper,
+            ::v-deep .el-input-group__append,
+            ::v-deep .el-input__inner {
+                background-color: @bdclolor;
+                border-color: @bdclolor;
+                box-shadow: 0 0 0 0;
+                color: #faf5f5;
+                font-size: 12px;
+                ::-webkit-input-placeholder{
+                    color: #f09e98;
+                }
+                
+            }
+            
         }
 
         .serch {
@@ -49,6 +73,7 @@
                 height: 11px;
                 margin-right: 4px;
                 margin-bottom: 1px;
+
                 svg {
                     width: 13px;
                     height: 11px;
@@ -65,12 +90,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+
             .arrow-right {
                 display: inline-flex;
                 width: 13px;
                 height: 11px;
                 margin-left: 1px;
                 margin-bottom: 1px;
+
                 svg {
                     width: 13px;
                     height: 11px;
