@@ -22,7 +22,7 @@ import { useSongStore } from '@/stores/song';
 const store = useSongStore();
 const currentTime = useGetCurrentTime();
 const words: any[] = reactive([]);
-const selected = ref(0);
+const selected = ref(-1);
 watch(
   () => selected.value,
   () => {

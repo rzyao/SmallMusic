@@ -1,105 +1,137 @@
 <template>
   <div class="collect">
-    <div class="button save-to-list no-save cursor-pointer" v-if="!isSave" @click="addMyCollection">
+    <div class="button save-to-list no-save cursor-pointer" @click="showAddToList">
       <svg
-        t="1670424626549"
+        t="1671538773597"
         class="icon"
         viewBox="0 0 1024 1024"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
-        p-id="6274"
+        p-id="5872"
         width="32"
         height="32"
       >
         <path
-          d="M949.888 457.258667c26.069333-29.824 13.866667-67.52-24.789333-76.309334L681.728 325.546667l-127.786667-214.677334c-20.266667-34.069333-59.925333-34.090667-80.213333 0l-127.786667 214.677334-243.370666 55.381333c-38.442667 8.746667-50.858667 46.506667-24.789334 76.309333l164.394667 188.053334-22.613333 248.917333c-3.584 39.466667 28.458667 62.805333 64.896 47.146667l237.781333-102.037334a21.333333 21.333333 0 0 0-16.810667-39.210666L267.626667 902.186667c-6.698667 2.88-6.229333 3.221333-5.568-4.096l24.277333-267.093334-176.426667-201.813333c-4.757333-5.461333-4.906667-5.034667 2.133334-6.634667l261.205333-59.434666 137.152-230.4c3.733333-6.293333 3.136-6.293333 6.869333 0l137.173334 230.4 261.205333 59.434666c7.125333 1.621333 6.954667 1.088 2.133333 6.613334l-176.426666 201.813333 24.256 267.093333a21.333333 21.333333 0 1 0 42.496-3.84l-22.613334-248.917333 164.394667-188.053333z"
-          p-id="6275"
+          d="M380.3 336.9l114.1-208.7c0.6-0.1 1-0.3 1.4-0.4-2.9-1.3 4-1.3 0 0 0.4 0.2 1 0.4 1.9 0.6l112.5 208c3.8 7 10.5 11.9 18.3 13.5L877 398.4l-92.4 100.5c-7.8 8.5-6.2 21.9 3.4 28.3 7.6 5.1 17.8 3.9 24.1-2.8l104-111c8.7-9.2 10.7-23 4.8-34.2 0-0.1-0.1-0.2-0.1-0.3-4.3-8.2-12.2-14-21.3-15.7l-241.4-46.3c-7.5-1.4-13.9-6.1-17.6-12.8L515.2 77c-3.9-7.1-11.3-11.6-19.5-11.8h-0.2c-8.4-0.1-16.1 4.5-20.2 11.8l-124 225c-4.4 8-12.2 13.7-21.2 15.4L89.9 363.5c-8.7 1.7-16.4 7.1-20.6 15 0 0 0 0.1-0.1 0.1-6 11.2-3.9 25.1 4.8 34.3l168 179.4c5.6 6 8.3 14.3 7.3 22.5L219 857.1c-1.4 11.2 3.4 22.4 12.7 28.7 0.1 0 0.1 0.1 0.2 0.1 9.1 6.2 21 6.8 30.8 1.8l249.8-125.8c9.5-4.8 13.6-16 9.6-25.8-4.5-10.8-17.1-15.6-27.6-10.5l-232 112.9L294 584.8c0.9-7.5-1.7-15-7.1-20.4L119.7 399.7l242.8-49.6c7.6-1.6 14.1-6.4 17.8-13.2z m539 423.3H791.2V632.1c0-10.9-9.5-19.8-21.2-19.8s-21.2 8.9-21.2 19.8v128.1H620.7c-10.9 0-19.8 9.5-19.8 21.2s8.9 21.2 19.8 21.2h128.1v128.1c0 10.9 9.5 19.8 21.2 19.8s21.2-8.9 21.2-19.8V802.6h128.1c10.9 0 19.8-9.5 19.8-21.2s-8.9-21.2-19.8-21.2z"
+          p-id="5873"
         ></path>
       </svg>
     </div>
-    <div class="button save-to-list saved cursor-pointer" v-if="isSave" @click="removeMyCollection">
-      <svg
-        t="1670424607677"
-        class="icon"
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="6120"
-        width="32"
-        height="32"
-      >
-        <path
-          d="M284.458667 941.397333c-36.437333 15.637333-68.48-7.68-64.896-47.168l22.613333-248.917333-164.394667-188.053333c-26.069333-29.824-13.653333-67.562667 24.789334-76.309334l243.370666-55.381333 127.786667-214.677333c20.288-34.090667 59.946667-34.069333 80.213333 0l127.786667 214.677333 243.370667 55.381333c38.656 8.789333 50.858667 46.485333 24.789333 76.309334l-164.394667 188.053333 22.741334 249.002667c3.605333 39.509333-28.458667 62.805333-64.896 47.146666l-229.504-98.517333-229.376 98.453333z"
-          fill="#000000"
-          p-id="6121"
-        ></path>
-      </svg>
+    <div class="show-list" v-if="addToListVisible">
+      <div class="top-name">收藏到歌单</div>
+      <div v-if="lists.length > 0">
+        <div
+          class="list"
+          v-for="list in lists"
+          :key="list.id"
+          @click="saveToList(list.id, list.name)"
+        >
+          <div class="icon">
+            <svg
+              t="1670942647731"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="3264"
+              width="16"
+              height="16"
+            >
+              <path
+                d="M880.245529 681.54683c3.287261 74.378806-47.322115 157.716302-134.163616 207.892194-113.067344 65.311744-244.44943 53.824391-293.469361-35.401278-47.141496-85.830035 3.034395-206.483367 116.101739-271.758986 91.356969-52.740678 193.840054-51.765337 255.936783-5.057326V117.907927c0-15.460966 12.643313-28.032032 28.104279-28.032032 15.49709 0 28.032032 12.534942 28.032032 28.032032v561.074117c0 0.86697-0.433485 1.661693-0.541856 2.564786z m-65.022754-43.492997c-39.158147-59.965428-146.517938-61.988359-230.036053-11.667972-83.518115 50.428758-123.579356 146.228948-84.421209 206.194377 39.230395 60.037676 142.869439 61.482626 226.387554 11.126115 83.518115-50.428758 127.300102-145.614845 88.069708-205.65252z m-130.767983-295.709035H179.516986c-15.49709 0-28.104279-12.534942-28.104279-28.032031 0-15.569337 12.643313-28.104279 28.104279-28.104279h504.937806c15.460966 0 28.032032 12.534942 28.032032 28.104279a28.032032 28.032032 0 0 1-28.032032 28.032031z m0-168.300561H179.516986c-15.49709 0-28.104279-12.534942-28.104279-28.032031 0-15.569337 12.643313-28.104279 28.104279-28.104279h504.937806c15.460966 0 28.032032 12.534942 28.032032 28.104279a28.032032 28.032032 0 0 1-28.032032 28.032031zM179.516986 454.509049h308.496843c15.569337 0 28.104279 12.534942 28.104279 28.104279 0 15.460966-12.534942 28.032032-28.104279 28.032031h-308.496843c-15.49709 0-28.104279-12.534942-28.104279-28.032031 0-15.533213 12.643313-28.104279 28.104279-28.104279z m0 168.336684h168.300561c15.460966 0 28.032032 12.534942 28.032031 28.104279a28.032032 28.032032 0 0 1-28.032031 28.032032H179.516986c-15.49709 0-28.104279-12.534942-28.104279-28.032032 0-15.569337 12.643313-28.104279 28.104279-28.104279z"
+                fill="#231815"
+                p-id="3265"
+              ></path>
+            </svg>
+          </div>
+          <div class="text">{{ list.name }}</div>
+        </div>
+      </div>
+      <div class="create-list">
+        <div class="icon">
+          <svg
+            t="1671541556458"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="6985"
+            width="32"
+            height="32"
+          >
+            <path
+              d="M512 992C246.912 992 32 777.088 32 512 32 246.912 246.912 32 512 32c265.088 0 480 214.912 480 480 0 265.088-214.912 480-480 480z m0-64c229.76 0 416-186.24 416-416S741.76 96 512 96 96 282.24 96 512s186.24 416 416 416z"
+              fill="#000000"
+              p-id="6986"
+            ></path>
+            <path
+              d="M256 544a32 32 0 0 1 0-64h512a32 32 0 0 1 0 64H256z"
+              fill="#000000"
+              p-id="6987"
+            ></path>
+            <path
+              d="M480 256a32 32 0 0 1 64 0v512a32 32 0 0 1-64 0V256z"
+              fill="#000000"
+              p-id="6988"
+            ></path>
+          </svg>
+        </div>
+        <div class="text">创建新歌单</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, reactive } from 'vue';
 import { useSongStore } from '@/stores/song';
 import { db } from '@/untils/dexie/db';
+import { ElMessage } from 'element-plus';
 const store = useSongStore();
-const { songsDetails } = store;
-const isSave = ref(false);
+// 最近播放的歌单详情
+const { currentSongDetails } = store;
+// 控制显示与隐藏
+const addToListVisible = ref(false);
+// 歌单数组
+const lists: any[] = reactive([]);
+// 打开函数
+async function showAddToList() {
+  if (!addToListVisible.value && currentSongDetails.id != '0') {
+    addToListVisible.value = true;
+    const res = await db.createdList.toArray();
+    lists.splice(0, lists.length);
+    lists.push(...res);
+  }
+}
 watch(
   () => store.currentId,
-  (newId) => {
-    isSave.value = false;
-    querySongIsSave(Number(newId));
-  }
+  (newId) => {}
 );
-async function querySongIsSave(id: number) {
-  const res = await db.songs.where('id').equalsIgnoreCase(String(id)).toArray();
-  if (res.length > 0) {
-    isSave.value = true;
-  }
-}
-async function removeMyCollection() {
-  const id = songsDetails.id;
-  const res = await db.songs.where('id').equalsIgnoreCase(id).delete();
-  // 返回数字/删除数量
-  if (res > 0) {
-    console.log('取消收藏成功');
-    isSave.value = false;
-  }
-}
-async function addMyCollection() {
-  if (songsDetails.id == '0') {
-    console.log('当前无歌曲');
-    return;
-  }
-  const obj = {
-    id: songsDetails.id,
-    name: songsDetails.name,
-    singers: JSON.stringify(songsDetails.singers),
-    album: songsDetails.album,
+async function saveToList(id: string, name: string) {
+  const song = {
+    name: currentSongDetails.name,
+    singers: JSON.stringify(currentSongDetails.singers),
+    album: currentSongDetails.album,
+    listId: id,
   };
-  const res = await db.songs.put(obj);
-  if (res == obj.id) {
-    console.log('收藏成功');
-    isSave.value = true;
+  const res = await db.collectSongs.add(song as any);
+  if (res > 0) {
+    ElMessage({
+      message: '收藏歌曲 ' + song.name + ' 到歌单 ' + name + ' 成功',
+      type: 'success',
+    });
+    addToListVisible.value = false;
+    const arr = await db.createdList.where('id').equals(id).toArray();
+    const songCount = arr[0].songCount + 1;
+    // // 更新歌单内的歌曲数量
+    const update = await db.collectList.update(id, {
+      songCount: songCount,
+    });
+    console.log(update);
   }
 }
+async function addMyCollection() {}
 </script>
 <style lang="less" scoped>
-.collect {
-  width: 24px;
-  height: 24px;
-}
-svg {
-  width: 24px;
-  height: 24px;
-  fill: #000000;
-}
-.save-to-list {
-  display: inline-flex;
-  width: 24px;
-  height: 24px;
-  justify-content: center;
-  align-items: center;
-}
+@import './collect.less';
 </style>

@@ -2,7 +2,7 @@
   <div class="page-song scroll0">
     <div class="songs-list no-select">
       <div class="title">
-        <div class="song">歌曲</div>
+        <div class="song">歌曲标题</div>
         <div class="singer">歌手</div>
         <div class="album">专辑</div>
         <div class="edit">操作</div>
@@ -112,7 +112,7 @@ const songs: any = reactive([]);
 const songStore = useSongStore();
 const favorite = useFavorite();
 onMounted(async () => {
-  const res: any = await window.devApi.search({
+  const res: any = await window.musicApi.search({
     keywords: String(props.serchText),
   });
   const arr = res.body.result.songs;
@@ -172,10 +172,11 @@ const { changeFavorite } = favorite;
   .title {
     width: 100%;
     height: 30px;
-    color: #5e5c5c;
+    color: #898585;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     div {
       width: 33%;
+      font-weight: 500;
       display: inline-flex;
       justify-content: start;
       align-items: center;
@@ -208,13 +209,13 @@ const { changeFavorite } = favorite;
 
   .songs {
     width: calc(100% + 4%);
+    height: 38px;
     display: flex;
     align-items: center;
     text-align: center;
     left: -4%;
     padding-left: 4%;
     div {
-      margin: 1px 0 1px 0;
       display: inline-flex;
       justify-content: start;
       align-items: center;
@@ -299,11 +300,11 @@ const { changeFavorite } = favorite;
   }
 
   .zebra {
-    background-color: #f5f2f2;
+    background-color: #fafafa;
   }
 
   .songs:hover {
-    background-color: #d8d2d2;
+    background-color: #e5e5e5;
   }
 }
 </style>

@@ -16,7 +16,7 @@ import { conversion, getProgress } from './musicPlay';
 import { useSongStore } from '@/stores/song';
 export default {
   name: 'MusicPlay',
-  emits: ['TotalTime', 'CurrentTime', 'onProgress', 'State', 'onEnd', 'onLoadError'],
+  emits: ['TotalTime', 'CurrentTime', 'onProgress', 'onStateChange', 'onEnd', 'onLoadError'],
   props: {
     url: String,
     play: Boolean,
@@ -55,18 +55,57 @@ export default {
     });
     function watchStalled() {
       document.getElementsByTagName('audio')[0].addEventListener('stalled', () => {
+        emit('onStateChange', 'stalled');
         emit('onLoadError', 'Failed to fetch data');
+        console.log('stalled');
+        console.log('用户代理正在尝试获取媒体数据，但数据出乎意料地没有出现。');
       });
     }
     function onEnd() {
       document.getElementsByTagName('audio')[0].addEventListener('ended', () => {
-        emit('State', 'ended');
+        emit('onStateChange', 'ended');
         emit('onEnd');
+        console.log('ended');
+        console.log('由于到达媒体末尾，播放已停止。');
       });
     }
     function onPlaying() {
+      document.getElementsByTagName('audio')[0].addEventListener('play', () => {
+        emit('onStateChange', 'play');
+        console.log('play');
+        console.log('播放已经开始。');
+      });
       document.getElementsByTagName('audio')[0].addEventListener('playing', () => {
-        emit('State', 'playing');
+        emit('onStateChange', 'playing');
+        console.log('playing');
+        console.log('由于缺少数据而暂停或延迟后，播放准备开始。');
+      });
+      document.getElementsByTagName('audio')[0].addEventListener('waiting', () => {
+        emit('onStateChange', 'waiting');
+        console.log('watting');
+        console.log('由于暂时缺少数据，播放已停止');
+      });
+      document.getElementsByTagName('audio')[0].addEventListener('suspend', () => {
+        emit('onStateChange', 'playing');
+        console.log('suspend');
+        console.log('媒体数据加载已暂停。');
+      });
+      document.getElementsByTagName('audio')[0].addEventListener('pause', () => {
+        emit('onStateChange', 'pause');
+        console.log('pause');
+        console.log('播放已暂停。');
+      });
+      document.getElementsByTagName('audio')[0].addEventListener('emptied', () => {
+        emit('onStateChange', 'emptied');
+        console.log('emptied');
+        console.log(
+          '媒体变空了；例如，如果媒体已经加载（或部分加载），则发送此事件，并 HTMLMediaElement.load调用该方法重新加载它。'
+        );
+      });
+      document.getElementsByTagName('audio')[0].addEventListener('waiting', () => {
+        emit('onStateChange', 'waiting');
+        console.log('watting');
+        console.log('由于暂时缺少数据，播放已停止');
       });
     }
     const store = useSongStore();

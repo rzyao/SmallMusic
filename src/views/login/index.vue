@@ -25,8 +25,9 @@
         placeholder="请输入密码"
         style="width: 200px"
       />
-      <div class="sign-in">登录</div>
+      <div class="sign-in" @click="open">登录</div>
       <div class="register"><a href="">注册</a></div>
+      <div class="url" ref="url"></div>
     </div>
   </div>
 </template>
@@ -43,10 +44,19 @@ export default {
       const login = document.querySelector('#login');
       login?.remove();
     };
+    function open() {
+      window.musicApi.openModel(
+        'http://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=Ativa20pVhgKF5XVNLYD3z1m5PPeNs8n&redirect_uri=https://music.ayaoblog.space/api/authorization&scope=basic,netdisk&device_id=29191002&display=popup&qrcode=1'
+      );
+    }
+    const url = ref();
+
     return {
       user,
       password,
       close,
+      open,
+      url,
     };
   },
 };

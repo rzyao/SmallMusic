@@ -49,7 +49,7 @@ export const useFavorite = defineStore('favorite', () => {
   async function addFavorite(songId: any) {
     const id = String(songId);
     // 请求获取歌曲详情
-    const res: any = await window.devApi.getSongDetails(id);
+    const res: any = await window.musicApi.getSongDetails(id);
     console.log(res);
     if (res.body.code !== 200) {
       return;

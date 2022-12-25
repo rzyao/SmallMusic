@@ -4,7 +4,7 @@ export const devPlugin = () => {
     name: 'dev-plugin',
     configureServer(server: ViteDevServer) {
       require('esbuild').buildSync({
-        entryPoints: ['./main.js'],
+        entryPoints: ['./src/main/main.js'],
         bundle: true,
         platform: 'node',
         outfile: './dist/main.js',
@@ -17,10 +17,14 @@ export const devPlugin = () => {
         // const httpAddress = `http://${addressInfo.address}:${addressInfo.port}`;
         //ipv4
         const httpAddress = `http://localhost:${addressInfo.port}`;
-        const electronProcess = spawn(require('electron').toString(), ['./main.js', httpAddress], {
-          cwd: process.cwd(),
-          stdio: 'inherit',
-        });
+        const electronProcess = spawn(
+          require('electron').toString(),
+          ['./src/main/main.js', httpAddress],
+          {
+            cwd: process.cwd(),
+            stdio: 'inherit',
+          }
+        );
         console.log(electronProcess);
         electronProcess.on('close', () => {
           server.close();

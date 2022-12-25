@@ -68,7 +68,7 @@ async function queryCollectionList() {
   collectionList.splice(0, collectionList.length);
   ltstIds.push(...res);
   ltstIds.forEach(async (item) => {
-    const res2: any = await window.devApi.getListDetails(item.id);
+    const res2: any = await window.musicApi.getListDetails(item.id);
     const result = res2.body.playlist;
     const obj = {
       id: result.id,

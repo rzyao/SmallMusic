@@ -43,4 +43,14 @@ contextBridge.exposeInMainWorld('musicApi', {
   getSongWord: (param) => {
     return ipcRenderer.invoke('dialog:getSongWord', param);
   },
+  openModel: (param) => {
+    return ipcRenderer.invoke('dialog:openModelWindow', param);
+  },
+  closeModel: (param) => {
+    return ipcRenderer.invoke('dialog:closeModelWindow', param);
+  },
+});
+// 控制modelWindow的关闭
+contextBridge.exposeInMainWorld('versions', {
+  closeModel: () => ipcRenderer.invoke('closeModel'),
 });

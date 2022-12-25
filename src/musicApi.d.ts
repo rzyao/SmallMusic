@@ -8,6 +8,7 @@ export interface musicApi {
   getSongDetails: (ids: string) => Promise<void>;
   getSongWord: (id: number) => Promise<void>;
   search: (param: any) => Promise<void>;
+  openModel: (param: any) => Promise<void>;
 }
 export interface IElectronApi {
   send: (string) => Promise<void>;
@@ -17,7 +18,6 @@ declare global {
   interface Window {
     musicApi: musicApi;
     electronApi: IElectronApi;
-    devApi: musicApi;
   }
 }
 declare global {

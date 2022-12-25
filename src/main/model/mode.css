@@ -1,0 +1,35 @@
+body.popup {
+    padding: 0;
+    margin: 0;
+    margin-top: 100px;
+    overflow: hidden;
+}
+
+.topbar{
+    background: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+.g-bd-wp {
+    margin-left: 50px;
+}
+.scope {
+    margin-top: 0;
+    margin-left: 0;
+    display: inline-flex !important;
+    flex-direction: column;
+    height: 333px;
+    justify-content: center;
+}
+.scope-from {
+    margin-bottom: 50px;
+}
+.g-bd {
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+.login .title {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}

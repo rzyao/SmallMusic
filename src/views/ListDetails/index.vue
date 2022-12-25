@@ -267,6 +267,7 @@ import { useRoute } from 'vue-router';
 import { useSongStore } from '@/stores/song';
 import type { Song } from './type';
 import { db } from '@/untils/dexie/db';
+import { ElMessage } from 'element-plus';
 export default {
   name: 'ListDetails',
   components: {},
@@ -306,14 +307,24 @@ export default {
       const isClollected = collectionList.findIndex((item) => item.id == listDetails.id) > -1;
       if (isClollected) {
         await db.collectList.delete(String(listDetails.id));
+        ElMessage({
+          message: '取消收藏成功',
+          type: 'success',
+        });
       } else {
-        await db.collectList.put({ id: String(listDetails.id) });
+        const res = await db.collectList.put({ id: String(listDetails.id) });
+        if (res > 0) {
+          ElMessage({
+            message: '收藏歌单成功',
+            type: 'success',
+          });
+        }
       }
       queryCollectionList();
     }
     onMounted(async () => {
       queryCollectionList();
-      const res: any = await window.devApi.getListDetails(listId);
+      const res: any = await window.musicApi.getListDetails(listId);
       const result = res.body.playlist;
       console.log('获取歌单详情');
       console.log(result);
@@ -326,7 +337,7 @@ export default {
       listDetails.shareCount = result.shareCount;
       listDetails.trackIds = result.trackIds;
       // 请求歌单所有歌曲
-      const res2: any = await window.devApi.getAllSongs(listId);
+      const res2: any = await window.musicApi.getAllSongs(listId);
       console.log('获取歌单所有歌曲');
       console.log(res2);
       const result2 = res2.body.songs;

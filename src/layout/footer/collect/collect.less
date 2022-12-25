@@ -1,0 +1,102 @@
+.collect {
+    width: 24px;
+    height: 24px;
+    svg {
+        width: 24px;
+        height: 24px;
+        fill: #000000;
+    }
+    .save-to-list {
+        display: inline-flex;
+        width: 24px;
+        height: 24px;
+        justify-content: center;
+        align-items: center;
+    
+        svg {
+            margin-top: 2px;
+        }
+    }
+    .show-list {
+        position: absolute;
+        bottom: 52px;
+        left: 0;
+        width: 140px;
+        border-radius: 5px;
+        background-color: #ffffff;
+        box-shadow: 0 0 2px 5px rgba(143, 143, 143, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        .top-name {
+            font-size: 14px;
+            font-weight: 600;
+            width: 100%;
+            height: 30px;
+            text-align: start;
+            border-bottom: 1px solid rgba(125, 125, 125, 0.1);
+            padding-left: 10px;
+        }
+        
+        .list {
+            padding-left: 8px;
+            display: inline-flex;
+            height: 30px;
+            text-align: start;
+            align-items: center;
+            .icon {
+                width: 20px;
+                height: 20px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    fill: #000000;
+                }
+            }
+            .text {
+                height: 24px;
+                display: inline-block;
+                flex: 1;
+                margin-left: 2px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+        .create-list {
+            padding-left: 8px;
+            border-top: 1px solid rgba(125, 125, 125, 0.1);
+            width: 100%;
+            height: 30px;
+            text-align: start;
+            display: flex;
+            align-items: center;
+            .icon {
+                width: 20px;
+                height: 20px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    fill: #000000;
+                }
+            }
+            .text {
+                height: 24px;
+                display: inline-block;
+                flex: 1;
+                margin-left: 2px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}
+
+
+

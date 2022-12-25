@@ -15,6 +15,7 @@
         @onProgress="getProgress"
         @onEnd="next"
         @onLoadError="LoadUrlError"
+        @onStateChange="changePlayState"
       ></MusicPlay>
       <div class="control">
         <div class="button-left cursor-pointer" @click="last">
@@ -79,6 +80,7 @@ import { useSongStore } from '@/stores/song';
 import { useVolumeStore } from '@/stores/volume';
 import { ref, watch, nextTick, onMounted } from 'vue';
 import { db } from '@/untils/dexie/db';
+import { useAudioStore } from '@/stores/audio';
 export default {
   name: 'LayoutFooter',
   components: { FooterLeft, FooterRight, MusicPlay },
@@ -229,6 +231,15 @@ export default {
         document.onmouseup = null;
       };
     }
+    const audioStore = useAudioStore();
+    const { changeState } = audioStore;
+    function changePlayState(state: string) {
+      if (state == 'play' || state == 'playing') {
+        changeState('playing');
+      } else if (state == 'pause') {
+        changeState('pause');
+      }
+    }
     return {
       src,
       isPlay,
@@ -248,6 +259,7 @@ export default {
       next,
       last,
       LoadUrlError,
+      changePlayState,
     };
   },
 };

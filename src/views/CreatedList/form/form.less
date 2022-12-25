@@ -1,0 +1,96 @@
+.no-select {
+    user-select:none;
+}
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .form {
+      width: 400px;
+      height: 230px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      border: 1px solid rgba(128, 126, 126, 0.2);
+      padding: 10px;
+      box-shadow: 0 0 1px 1px rgba(161, 161, 161, 0.1);
+      .close {
+        display: flex;
+        width: 100%;
+        height: 20px;
+        justify-content: flex-end;
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+      }
+      .text {
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        
+      }
+      .name {
+        margin-top: 20px;
+        ::v-deep .el-input__inner{
+            font-size: 12px;
+            ::-webkit-input-placeholder{
+                color: #bdbcbc;
+            }
+        }
+      }
+      .private {
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        .icon-box {
+            display: inline-flex;
+            width: 18px;
+            height: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        .icon-choosed {
+            display: inline-flex;
+            width: 18px;
+            height: 18px;
+            overflow: hidden;
+            border: 0;
+            svg {
+                background-color:  #ec4141;
+            }
+        }
+        .private-text {
+            height: 18px;
+            margin-left: 5px;
+            display: inline-flex;
+            font-size: 12px;
+            font-weight: 0;
+            align-items: center;
+        }
+        
+      }
+      .submit {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        .button {
+            overflow: hidden;
+            border-radius: 15px;
+            padding: 5px 25px;
+            background-color: #ec4141;
+            color: #ffffff;
+        }
+        .button:hover {
+            background-color: #c72f2f;
+        }
+      }
+    }
+  }

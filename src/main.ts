@@ -10,13 +10,6 @@ String.prototype.byteLength = function () {
   });
   return totalLength;
 };
-import MusicApi from '../env.musicapi.development';
-window.devApi = window.musicApi;
-// if (import.meta.env.DEV) {
-//   window.devApi = MusicApi as any;
-// } else {
-//   window.devApi = window.musicApi;
-// }
 import { createApp } from 'vue';
 import pinia from './stores/store';
 

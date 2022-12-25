@@ -1,4 +1,4 @@
-import { reactive, watch, computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useSongStore } from '@/stores/song';
 import pinia from '@/stores/store';
 const stores = useSongStore(pinia);
@@ -12,7 +12,7 @@ export function useGetCurrentTime() {
 // }
 export async function useGetWords(id: number) {
   const result: any[] = [];
-  const res: any = await window.devApi.getSongWord(Number(id));
+  const res: any = await window.musicApi.getSongWord(Number(id));
   const reg2 = /]/;
   const reg = /\n/;
   const data = res.body.lrc.lyric.split(reg);

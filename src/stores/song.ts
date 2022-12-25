@@ -2,6 +2,7 @@ import { ref, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import type { Song, SongDetails } from '@/stores/type';
 import picUrl from '@/assets/default_song_pic.png';
+import { ElMessage } from 'element-plus';
 export const useSongStore = defineStore('song', () => {
   // 当前歌曲的播放时间
   const currentTime = ref(0);
@@ -28,7 +29,7 @@ export const useSongStore = defineStore('song', () => {
   // 请求歌曲详情
   async function getSongDetails(id: any) {
     const ids = String(id);
-    const res: any = await window.devApi.getSongDetails(ids);
+    const res: any = await window.musicApi.getSongDetails(ids);
     if (res.body && res.body.code == 200) {
       const obj: SongDetails = {
         id: res.body.songs[0].id,
@@ -104,17 +105,22 @@ export const useSongStore = defineStore('song', () => {
   async function playTheSong(id: any) {
     console.log('播放指定的歌曲');
     try {
-      const res: any = await window.devApi.getSongUrl(Number(id));
+      const res: any = await window.musicApi.getSongUrl(Number(id));
+      console.log(res);
       if (res.body && res.body.code == 200) {
         currentId.value = id;
         const url = res.body.data[0].url;
-        changeSong(url);
         changeCurrentId(id);
+        changeSong(url);
         const song = await getSongDetails(id);
         // 判断当前播放列表是否存在该歌曲,如果不存在则添加到播放列表
         const index = CurrentPlayList.findIndex((item) => item.id == id);
         if (index == -1) {
           addSongToCurrentPlayList(song as Song);
+        }
+        if (url == null) {
+          ElMessage.error('歌曲链接为空,播放下一首');
+          playNextSong();
         }
         return true;
       }
@@ -127,7 +133,7 @@ export const useSongStore = defineStore('song', () => {
   async function addSongToPlayListAndPlay(song: Song) {
     CurrentPlayList.push(song);
     const id = song.id;
-    const res: any = await window.devApi.getSongUrl(Number(id));
+    const res: any = await window.musicApi.getSongUrl(Number(id));
     if (res.body && res.body.code == 200) {
       currentId.value = id;
       const url = res.body.data[0].url;

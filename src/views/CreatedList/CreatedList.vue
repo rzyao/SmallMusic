@@ -77,24 +77,39 @@
           </div>
           <div class="name">{{ item.name }}</div>
           <div class="songCount">歌曲数: {{ item.songCount }}首</div>
-          <div class="create-time">{{ item.playCount }}次</div>
+          <div class="create-time">创建于: {{ item.createTime }}</div>
         </div>
       </div>
     </div>
-    <createform v-model:show="creating"></createform>
+    <createform v-model:show="formVisible" @onSuccess="onSuccess"></createform>
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, reactive, ref, computed } from 'vue';
-import { useSongStore } from '@/stores/song';
-import createform from './form/form';
+import { onMounted, reactive, ref } from 'vue';
+import { db } from '@/untils/dexie/db';
+import createform from './form/form.vue';
 import imgUrl from '@/assets/current.jpg';
-const creating = ref(false);
-function createNewList() {
-  creating.value = true;
-}
+const formVisible = ref(false);
 const createdList: any = reactive([]);
+onMounted(() => {
+  getList();
+});
+function createNewList() {
+  formVisible.value = true;
+}
+
+function handleOk() {}
+
 function toListDetails(id: any) {}
+function onSuccess() {
+  getList();
+}
+// 从数据库获取歌单
+async function getList() {
+  const list = await db.createdList.toArray();
+  createdList.splice(0, createdList.length);
+  createdList.push(...list);
+}
 </script>
 <style lang="less" scoped>
 @import '@/views/CreatedList/CreatedList.less';

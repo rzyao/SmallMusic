@@ -39,7 +39,7 @@ export default {
     const menuData = router.getRoutes();
     const songLists: Songlist[] = reactive([]);
     onMounted(async () => {
-      const res: any = await window.devApi.getLists(20);
+      const res: any = await window.musicApi.getLists(20);
       const result = res.body.result;
       songLists.push(...result);
     });
@@ -57,4 +57,17 @@ export default {
 </script>
 <style lang="less" scoped>
 @import '@/views/Home/home.less';
+.iframe {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: #ffffff;
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>
