@@ -18,13 +18,17 @@ import LayoutSider from '@/layout/sider/index.vue';
 import LayoutFooter from '@/layout/footer/index.vue';
 import MainContent from '@/layout/content/index.vue';
 import { useFavorite } from '@/stores/favorite';
+import { useUserStore } from '@/stores/user';
 export default {
   name: 'defaultLayout',
   components: { LayoutHeader, LayoutSider, LayoutFooter, MainContent },
   setup() {
     const store = useFavorite();
-    console.log(store);
     store.getFavoriteListFromDB();
+
+    const userStore = useUserStore();
+    userStore.refreshUserStore();
+
     return {};
   },
 };

@@ -2,6 +2,7 @@
 // preload.js
 // All the Node.js APIs are available in the preload process.
 // 它拥有与Chrome扩展一样的沙盒。
+// injectCSS(css);
 window.addEventListener('DOMContentLoaded', () => {
   injectCSS(css);
   const replaceText = (selector, text) => {
@@ -12,7 +13,29 @@ window.addEventListener('DOMContentLoaded', () => {
     replaceText(`${dependency}-version`, process.versions[dependency]);
   }
 });
-
+function clearCookies() {
+  // 查询所有 cookies。删除。
+  session.defaultSession.cookies
+    .get({})
+    .then((cookies) => {
+      cookies.forEach((cookie) => {
+        let url = '';
+        // get prefix, like https://www.
+        url += cookie.secure ? 'https://' : 'http://';
+        url += cookie.domain?.charAt(0) === '.' ? 'www' : '';
+        // append domain and path
+        url += cookie.domain;
+        url += cookie.path;
+        session.defaultSession.cookies.remove(url, cookie.name);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+window.addEventListener('close', () => {
+  clearCookies();
+});
 const { contextBridge, ipcRenderer } = require('electron');
 // 返回登录成功的tokenkkkkkkkkkk
 contextBridge.exposeInMainWorld('modelApi', {

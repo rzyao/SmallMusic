@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 // main.js
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, BrowserView } = require('electron');
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 const path = require('path');
 const createWindow = () => {
@@ -75,7 +75,7 @@ ipcMain.handle('dialog:openModelWindow', async (e, url) => {
 });
 const createModelWindow = (url) => {
   console.log(url);
-  modelWindow = new BrowserWindow({
+  const modelWindow = new BrowserWindow({
     frame: false, //设置无边框
     skipTaskbar: true, //设置不在任务栏显示
     alwaysOnTop: true, //设置窗口置顶
@@ -87,9 +87,18 @@ const createModelWindow = (url) => {
       preload: path.join(__dirname, './model/model.js'),
       nodeIntegration: false,
     },
+    show: false,
   });
   // mainWindow.loadFile(process.argv[2]);
+
+  // const view = new BrowserView();
+  // modelWindow.setBrowserView(view);
+  // view.setBounds({ x: 0, y: 0, width: 600, height: 80 });
+  // view.webContents.loadFile(path.join(__dirname, './model/model.html'));
   modelWindow.loadURL(url);
+  modelWindow.once('ready-to-show', () => {
+    modelWindow.show();
+  });
   ipcMain.on('dialog:closeModelWindow', () => {
     modelWindow.close();
   });
