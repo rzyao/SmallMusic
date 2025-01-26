@@ -18,13 +18,13 @@
     </div>
     <div class="content">
       <div class="logo">Small Music</div>
-      <a-input
+      <Input
         class="username"
         v-model:value="user"
         placeholder="请输入注册邮箱"
         style="width: 200px"
       />
-      <a-input-password
+      <Input.Password
         class="password"
         v-model:value="password"
         placeholder="请输入密码"
@@ -53,13 +53,13 @@
     </div>
     <div class="content">
       <div class="logo">Small Music</div>
-      <a-input
+      <Input
         class="username"
         v-model:value="user"
         placeholder="请输入注册邮箱"
         style="width: 200px"
       />
-      <a-input-password
+      <Input.Password
         class="password"
         v-model:value="password"
         placeholder="请输入密码"
@@ -70,41 +70,38 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import { Input } from 'ant-design-vue';
 import { ref } from 'vue';
-export default {
-  name: 'Login',
-  components: { 'a-input': Input, 'a-input-password': Input.Password },
-  setup() {
-    const user = ref('');
-    const password = ref('');
-    const close = (): void => {
-      const login = document.querySelector('#login');
-      login?.remove();
-    };
-    function open() {
-      window.musicApi.openModel(
-        'http://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=Ativa20pVhgKF5XVNLYD3z1m5PPeNs8n&redirect_uri=https://music.ayaoblog.space/api/authorization&scope=basic,netdisk&device_id=29191002&display=popup&qrcode=1'
-      );
-    }
-    const type = ref('signIn');
-    function toSignUp() {
-      type.value = 'signUp';
-    }
-    const url = ref();
 
-    return {
-      user,
-      password,
-      close,
-      open,
-      url,
-      toSignUp,
-      type,
-    };
-  },
-};
+const user = ref('');
+const password = ref('');
+const type = ref('signIn');
+
+function close() {
+  const login = document.querySelector('#login');
+  login?.remove();
+}
+
+async function open() {
+  const { token, user } = await window.api.electron.openModel(
+    'http://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=Ativa20pVhgKF5XVNLYD3z1m5PPeNs8n&redirect_uri=http://127.0.0.1:8080/api/baidu_authorization&scope=basic,netdisk&device_id=29191002&display=popup&qrcode=1'
+  );
+  // 保存token
+  localStorage.setItem('token', token);
+  // 保存用户信息
+  localStorage.setItem('user', user);
+  close();
+  window.api.electron.closeModel();
+}
+
+function toSignUp() {
+  type.value = 'signUp';
+}
+
+function toSignIn() {
+  type.value = 'signIn';
+}
 </script>
 <style lang="less" scoped>
 @import '@/views/login/login.less';

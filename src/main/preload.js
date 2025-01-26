@@ -13,44 +13,57 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 const { contextBridge, ipcRenderer } = require('electron');
-contextBridge.exposeInMainWorld('electronApi', {
-  send: (event) => {
-    ipcRenderer.send(event);
+contextBridge.exposeInMainWorld('api', {
+  electron: {
+    send: (event) => {
+      ipcRenderer.send(event);
+    },
+    searchSong: (param) => {
+      return ipcRenderer.invoke('dialog:search', param);
+    },
+    hide: () => {
+      ipcRenderer.send('hide');
+    },
+    show: () => {
+      ipcRenderer.send('show');
+    },
+    openModel: (param) => {
+      return ipcRenderer.invoke('dialog:openModelWindow', param);
+    },
+    closeModel: () => {
+      return ipcRenderer.invoke('dialog:openModelWindow');
+    },
   },
-  searchSong: (param) => {
-    return ipcRenderer.invoke('dialog:search', param);
+  music163: {
+    search: (param) => {
+      return ipcRenderer.invoke('dialog:search', param);
+    },
+    getLists: (param) => {
+      return ipcRenderer.invoke('dialog:getLists', param);
+    },
+    getListDetails: (param) => {
+      return ipcRenderer.invoke('dialog:getListDetails', param);
+    },
+    getAllSongs: (param) => {
+      return ipcRenderer.invoke('dialog:getAllSongs', param);
+    },
+    getSongUrl: (param) => {
+      return ipcRenderer.invoke('dialog:getSongUrl', param);
+    },
+    getSongDetails: (param) => {
+      return ipcRenderer.invoke('dialog:getSongDetails', param);
+    },
+    getSongWord: (param) => {
+      return ipcRenderer.invoke('dialog:getSongWord', param);
+    },
+    openModel: (param) => {
+      return ipcRenderer.invoke('dialog:openModelWindow', param);
+    },
+    closeModel: (param) => {
+      return ipcRenderer.invoke('dialog:closeModelWindow', param);
+    },
   },
-});
-contextBridge.exposeInMainWorld('musicApi', {
-  search: (param) => {
-    return ipcRenderer.invoke('dialog:search', param);
-  },
-  getLists: (param) => {
-    return ipcRenderer.invoke('dialog:getLists', param);
-  },
-  getListDetails: (param) => {
-    return ipcRenderer.invoke('dialog:getListDetails', param);
-  },
-  getAllSongs: (param) => {
-    return ipcRenderer.invoke('dialog:getAllSongs', param);
-  },
-  getSongUrl: (param) => {
-    return ipcRenderer.invoke('dialog:getSongUrl', param);
-  },
-  getSongDetails: (param) => {
-    return ipcRenderer.invoke('dialog:getSongDetails', param);
-  },
-  getSongWord: (param) => {
-    return ipcRenderer.invoke('dialog:getSongWord', param);
-  },
-  openModel: (param) => {
-    return ipcRenderer.invoke('dialog:openModelWindow', param);
-  },
-  closeModel: (param) => {
-    return ipcRenderer.invoke('dialog:closeModelWindow', param);
-  },
-});
-// 控制modelWindow的关闭
-contextBridge.exposeInMainWorld('versions', {
-  closeModel: () => ipcRenderer.invoke('closeModel'),
+  versions: {
+    closeModel: () => ipcRenderer.invoke('closeModel'),
+  }
 });

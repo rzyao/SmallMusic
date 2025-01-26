@@ -22,7 +22,7 @@ const createWindow = () => {
   // mainWindow.loadFile(process.argv[2]);
   mainWindow.loadURL(process.argv[2]);
   // 打开开发工具
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools({ mode: 'detach' });
   //接收最小化命令
   ipcMain.on('window-min', function () {
     console.log('window-min');
@@ -37,8 +37,10 @@ const createWindow = () => {
       mainWindow.maximize();
     }
   });
+  // 接收隐藏命令
   ipcMain.on('window-hide', function () {
     console.log('window-hide');
+    mainWindow.hide();
   });
   // 当窗口隐藏时,发送隐藏消息
   mainWindow.on('hide', () => {
@@ -70,8 +72,7 @@ const { defineRequest } = require('./request');
 defineRequest();
 
 ipcMain.handle('dialog:openModelWindow', async (e, url) => {
-  createModelWindow(url);
-  return 'res';
+  return createModelWindow(url);
 });
 const createModelWindow = (url) => {
   console.log(url);
@@ -101,6 +102,16 @@ const createModelWindow = (url) => {
   });
   ipcMain.on('dialog:closeModelWindow', () => {
     modelWindow.close();
+  });
+
+  modelWindow.webContents.on('did-finish-load', () => {
+    console.log('Page loaded');
+    // 你可以在这里执行 JavaScript 来获取页面内容
+    modelWindow.webContents.executeJavaScript('document.body.innerText').then(result => {
+      console.log('Page content:', result);
+      console.log('token:', result.token);
+      return { token: result.token, user: result.user };
+    });
   });
 };
 // ipcMain.on('closeModel', () => {

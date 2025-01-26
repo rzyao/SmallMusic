@@ -39,7 +39,7 @@ export default {
     const menuData = router.getRoutes();
     const songLists: Songlist[] = reactive([]);
     onMounted(async () => {
-      const res: any = await window.musicApi.getLists(20);
+      const res: any = await window.api.music163.getLists(20);
       const result = res.body.result;
       songLists.push(...result);
     });

@@ -1,4 +1,4 @@
-export interface musicApi {
+export interface Music163Api {
   //获取推荐歌单,limit:获取数量
   getLists: (limit: number) => Promise<void>;
   searchSong: (string) => Promise<void>;
@@ -8,16 +8,19 @@ export interface musicApi {
   getSongDetails: (ids: string) => Promise<void>;
   getSongWord: (id: number) => Promise<void>;
   search: (param: any) => Promise<void>;
-  openModel: (param: any) => Promise<void>;
 }
-export interface IElectronApi {
-  send: (string) => Promise<void>;
-  searchSong: (string) => Promise<void>;
+export interface ElectronApi {
+  hide: () => Promise<void>;
+  show: () => Promise<void>;
+  openModel: (param: string) => Promise<{ token: string; user: string }>;
+  closeModel: () => Promise<void>;
 }
 declare global {
   interface Window {
-    musicApi: musicApi;
-    electronApi: IElectronApi;
+    api: {
+      music163: Music163Api;
+      electron: ElectronApi;
+    };
   }
 }
 declare global {
